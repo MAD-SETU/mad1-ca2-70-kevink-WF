@@ -1,30 +1,28 @@
-package ie.gymfinder
+package ie.gymfinder.activities
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
 import ie.gymfinder.databinding.ActivityMainBinding
 import timber.log.Timber
-import timber.log.Timber.Forest.i
 
 
 class GymActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    var gym = GymModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
          binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Timber.plant(Timber.DebugTree())
-        i("Gym Activity started..")
+        Timber.Forest.plant(Timber.DebugTree())
+        Timber.Forest.i("Gym Activity started..")
 
 
         binding.btnAdd.setOnClickListener() {
-            val GymTitle = binding.GymTitle.text.toString()
-            if (GymTitle.isNotEmpty()) {
-                i("add Button Pressed: $GymTitle")
+            gym.title = binding.GymTitle.text.toString()
+            if (gym.title.isNotEmpty()) {
+                Timber.Forest.i("add Button Pressed: ${gym.title}")
             }
             else {
                 Snackbar
