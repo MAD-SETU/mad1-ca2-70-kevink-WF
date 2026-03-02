@@ -1,4 +1,4 @@
 package ie.gymfinder.activities
 
-data class GymModel(var title: String = "")
+data class GymModel(var title: String = "", var description: String = "")
 
