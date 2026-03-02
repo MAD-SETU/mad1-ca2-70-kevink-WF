@@ -9,7 +9,9 @@ android {
             minorApiLevel = 1
         }
     }
-
+    buildFeatures {
+        viewBinding = true
+    }
     defaultConfig {
         applicationId = "ie.gymfinder"
         minSdk = 34
@@ -41,7 +43,12 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    implementation(libs.timber)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
 }

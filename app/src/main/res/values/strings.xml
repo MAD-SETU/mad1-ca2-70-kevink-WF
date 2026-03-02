@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">GymFinder</string>
+    <string name="button_addGym">Add Gym</string>
+    <string name="hint_placemarkGym">Gym Title</string>
 </resources>
