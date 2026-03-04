@@ -3,4 +3,5 @@
     <string name="button_addGym">Add Gym</string>
     <string name="hint_placemarkGym">Gym Title</string>
     <string name="Description">Description </string>
+    <string name="menu_cancelGym">Cancel</string>
 </resources>

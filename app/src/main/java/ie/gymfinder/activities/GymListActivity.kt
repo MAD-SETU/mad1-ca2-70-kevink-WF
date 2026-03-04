@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ie.gymfinder.R
+import ie.gymfinder.adapters.GymAdapter
 import ie.gymfinder.databinding.ActivityGymListBinding
 import ie.gymfinder.databinding.CardGymBinding
 import ie.gymfinder.main.MainApp
@@ -32,7 +33,8 @@ class GymListActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = GymAdapter(app.gyms)
+        binding.recyclerView.adapter = GymAdapter(app.gyms.findAll())
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -56,34 +58,7 @@ class GymListActivity : AppCompatActivity() {
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.gyms.size)
+                notifyItemRangeChanged(0,app.gyms.findAll().size)
             }
         }
-}
-
-class GymAdapter constructor(private var gyms: List<GymModel>) :
-    RecyclerView.Adapter<GymAdapter.MainHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
-        val binding = CardGymBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
-
-        return MainHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        val gym = gyms[holder.adapterPosition]
-        holder.bind(gym)
-    }
-
-    override fun getItemCount(): Int = gyms.size
-
-    class MainHolder(private val binding: CardGymBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(gym: GymModel) {
-            binding.gymTitle.text = gym.title
-            binding.description.text = gym.description
-        }
-    }
 }

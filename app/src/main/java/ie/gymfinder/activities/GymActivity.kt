@@ -2,8 +2,11 @@ package ie.gymfinder.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import ie.gymfinder.R
 import ie.gymfinder.databinding.ActivityMainBinding
 import ie.gymfinder.main.MainApp
 import timber.log.Timber
@@ -18,13 +21,16 @@ class GymActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.toolbarAdd.title = title
+        setSupportActionBar(binding.toolbarAdd)
         app = application as MainApp
 
         binding.btnAdd.setOnClickListener() {
             gym.title = binding.GymTitle.text.toString()
             gym.description = binding.description.text.toString()
             if (gym.title.isNotEmpty()) {
-                app.gyms.add(gym.copy())
+                app.gyms.create(gym.copy())
                 Timber.Forest.i("add Button Pressed: ${gym.title}")
                 setResult(RESULT_OK)
                 finish()
@@ -35,5 +41,16 @@ class GymActivity : AppCompatActivity() {
                     .show()
             }
         }
+    }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_gym, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_cancel -> { finish() }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
