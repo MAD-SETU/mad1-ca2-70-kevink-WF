@@ -64,6 +64,7 @@
                     android:padding="8dp"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
+
                 <Button
                     android:id="@+id/btnAdd"
                     android:layout_width="match_parent"
@@ -75,6 +76,19 @@
                     android:text="@string/button_addGym"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/DeleteGym"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:backgroundTint="@color/md_theme_primary"
+                    android:padding="8dp"
+                    android:stateListAnimator="@null"
+                    android:text="@string/delete"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>

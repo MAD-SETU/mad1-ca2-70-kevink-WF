@@ -1,4 +1,7 @@
-package ie.gymfinder.activities
+package ie.gymfinder.models
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-data class GymModel(var title: String = "", var description: String = "")
-
+@Parcelize
+data class GymModel(var id: Long = 0,
+                    var title: String = "", var description: String = "") : Parcelable
