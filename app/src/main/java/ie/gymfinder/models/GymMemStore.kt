@@ -28,6 +28,8 @@ class GymMemStore : GymStore{
         if (foundGym != null) {
             foundGym.title = gym.title
             foundGym.description = gym.description
+            foundGym.counties = gym.counties
+
             logAll()
         }
     }
