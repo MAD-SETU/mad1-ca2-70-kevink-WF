@@ -7,4 +7,6 @@ interface GymStore {
     fun create(gym: GymModel)
 
     fun update(gym: GymModel)
+
+    fun delete(gym: GymModel)
 }

@@ -10,7 +10,8 @@ interface GymListener {
     fun onGymClick(gym: GymModel)
 }
 
-class GymAdapter(private var gyms: List<GymModel>, private var listener: GymListener) :
+class GymAdapter(private var gyms: List<GymModel>,
+                 private var listener: GymListener) :
     RecyclerView.Adapter<GymAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {

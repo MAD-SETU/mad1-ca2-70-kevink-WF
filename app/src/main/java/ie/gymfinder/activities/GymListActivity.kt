@@ -61,8 +61,7 @@ class GymListActivity : AppCompatActivity(), GymListener {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
-                (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.gyms.findAll().size)
+                binding.recyclerView.adapter = GymAdapter(app.gyms.findAll(), this)
             }
         }
 
@@ -71,8 +70,8 @@ class GymListActivity : AppCompatActivity(), GymListener {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
-                (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.gyms.findAll().size)
+                binding.recyclerView.adapter = GymAdapter(app.gyms.findAll(), this)
+
             }
         }
 }
