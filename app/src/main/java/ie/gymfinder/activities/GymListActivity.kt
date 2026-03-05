@@ -13,6 +13,7 @@ import ie.gymfinder.adapters.GymAdapter
 import ie.gymfinder.adapters.GymListener
 import ie.gymfinder.databinding.ActivityGymListBinding
 import ie.gymfinder.main.MainApp
+import ie.gymfinder.models.GymModel
 
 class GymListActivity : AppCompatActivity(), GymListener {
 

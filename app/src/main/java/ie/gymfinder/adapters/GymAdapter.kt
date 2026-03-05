@@ -3,12 +3,14 @@ package ie.gymfinder.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ie.gymfinder.activities.GymModel
+import ie.gymfinder.models.GymModel
 import ie.gymfinder.databinding.CardGymBinding
+
 interface GymListener {
     fun onGymClick(gym: GymModel)
 }
-class GymAdapter(private var gyms: List<GymModel>,private var listener: GymListener) :
+
+class GymAdapter(private var gyms: List<GymModel>, private var listener: GymListener) :
     RecyclerView.Adapter<GymAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {

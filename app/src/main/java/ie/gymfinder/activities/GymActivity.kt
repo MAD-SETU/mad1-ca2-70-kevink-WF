@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 import ie.gymfinder.R
 import ie.gymfinder.databinding.ActivityMainBinding
 import ie.gymfinder.main.MainApp
+import ie.gymfinder.models.GymModel
 import timber.log.Timber
 
 

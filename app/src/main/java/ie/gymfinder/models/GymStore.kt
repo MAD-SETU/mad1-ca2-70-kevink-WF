@@ -1,6 +1,6 @@
 package ie.gymfinder.models
 
-import ie.gymfinder.activities.GymModel
+import ie.gymfinder.models.GymModel
 
 interface GymStore {
     fun findAll(): List<GymModel>

@@ -1,6 +1,6 @@
 package ie.gymfinder.models
 
-import ie.gymfinder.activities.GymModel
+import ie.gymfinder.models.GymModel
 import timber.log.Timber.Forest.i
 
 class GymMemStore : GymStore{
