@@ -15,4 +15,13 @@ class GymMemStore : GymStore{
     fun logAll() {
         gyms.forEach{ i("$it") }
     }
+
+    override fun update(gym: GymModel) {
+        val foundGym: GymModel? = gyms.find { p -> p.id == gym.id }
+        if (foundGym != null) {
+            foundGym.title = gym.title
+            foundGym.description = gym.description
+            logAll()
+        }
+    }
 }

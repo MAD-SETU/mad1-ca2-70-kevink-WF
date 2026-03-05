@@ -26,7 +26,11 @@ class GymActivity : AppCompatActivity() {
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
         app = application as MainApp
-
+        if (intent.hasExtra("gym_edit")) {
+            gym = intent.extras?.getParcelable("gym_edit")!!
+            binding.GymTitle.setText(gym.title)
+            binding.description.setText(gym.description)
+        }
         binding.btnAdd.setOnClickListener() {
             gym.title = binding.GymTitle.text.toString()
             gym.description = binding.description.text.toString()

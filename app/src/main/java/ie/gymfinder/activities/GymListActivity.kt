@@ -51,6 +51,7 @@ class GymListActivity : AppCompatActivity(), GymListener {
 
     override fun onGymClick(gym: GymModel) {
         val launcherIntent = Intent(this, GymActivity::class.java)
+        launcherIntent.putExtra("gym_edit", gym)
         getClickResult.launch(launcherIntent)
     }
 
