@@ -3,21 +3,18 @@ package ie.gymfinder.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import ie.gymfinder.R
 import ie.gymfinder.adapters.GymAdapter
+import ie.gymfinder.adapters.GymListener
 import ie.gymfinder.databinding.ActivityGymListBinding
-import ie.gymfinder.databinding.CardGymBinding
 import ie.gymfinder.main.MainApp
 
-class GymListActivity : AppCompatActivity() {
+class GymListActivity : AppCompatActivity(), GymListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityGymListBinding
@@ -33,8 +30,7 @@ class GymListActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = GymAdapter(app.gyms.findAll())
-
+        binding.recyclerView.adapter = GymAdapter(app.gyms.findAll(), this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -51,6 +47,21 @@ class GymListActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onGymClick(gym: GymModel) {
+        val launcherIntent = Intent(this, GymActivity::class.java)
+        getClickResult.launch(launcherIntent)
+    }
+
+    private val getClickResult =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                (binding.recyclerView.adapter)?.
+                notifyItemRangeChanged(0,app.gyms.findAll().size)
+            }
+        }
 
     private val getResult =
         registerForActivityResult(

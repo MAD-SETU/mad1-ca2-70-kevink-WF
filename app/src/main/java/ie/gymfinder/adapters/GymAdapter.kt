@@ -5,8 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ie.gymfinder.activities.GymModel
 import ie.gymfinder.databinding.CardGymBinding
-
-class GymAdapter(private var gyms: List<GymModel>) :
+interface GymListener {
+    fun onGymClick(gym: GymModel)
+}
+class GymAdapter(private var gyms: List<GymModel>,private var listener: GymListener) :
     RecyclerView.Adapter<GymAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -17,7 +19,7 @@ class GymAdapter(private var gyms: List<GymModel>) :
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val gym = gyms[holder.adapterPosition]
-        holder.bind(gym)
+        holder.bind(gym,listener)
     }
 
     override fun getItemCount(): Int = gyms.size
@@ -25,9 +27,11 @@ class GymAdapter(private var gyms: List<GymModel>) :
     class MainHolder(private val binding: CardGymBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(gym: GymModel) {
+        fun bind(gym: GymModel, listener: GymListener) {
             binding.gymTitle.text = gym.title
             binding.description.text = gym.description
+            binding.root.setOnClickListener { listener.onGymClick(gym) }
         }
     }
+
 }
