@@ -7,4 +7,22 @@
     <string name="save_Gym">Save</string>
     <string name="EnterTitle">Please Enter a title</string>
     <string name="delete">Delete</string>
+    <string-array name="Counties">
+        <item>Waterford</item>
+        <item>Dublin</item>
+        <item>Cork</item>
+        <item>Limerick</item>
+        <item>Galway</item>
+        <item>Kilkenny</item>
+        <item>Sligo</item>
+        <item>Longford</item>
+        <item>Wexford</item>
+        <item>Offaly</item>
+        <item>Westmeath</item>
+        <item>Roscommon</item>
+        <item>Leitrim</item>
+        <item>Mayo</item>
+        <item>Cavan</item>
+        <item>Donegal</item>
+    </string-array>
 </resources>

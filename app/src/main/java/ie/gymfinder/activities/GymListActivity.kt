@@ -5,6 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,7 +34,52 @@ class GymListActivity : AppCompatActivity(), GymListener {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = GymAdapter(app.gyms.findAll(), this)
+        
+        // Get countries from resources then adds to a mutableList
+        val counties = resources.getStringArray(R.array.Counties).toMutableList()
+        // Adds "All" to the start of the list
+        counties.add(0, "All")
+        // Creates an Adapter using the countries list and this activity as the context
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, counties)
+        // changes the layouts of the drop down elements
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        // Sets the adapter to the spinner
+        binding.countySpinner.adapter = adapter
+        // makes the listerner for the spinner
+        binding.countySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+           // This is adapter is triggered the event
+            // when a new item is selected
+            // and calls the filterList function
+            // with the selected item
+            override fun onItemSelected(parent: AdapterView<*>?,
+                                        view: View?, position: Int, id: Long) {
+                val selectedCounty = parent?.getItemAtPosition(position).toString()
+                filterList(selectedCounty)
+            }
+             // This is adapter is triggered the event
+            // when nothing is selected
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+        //  loadsGyms() is called when the activity is created
+        loadGyms()
+    }
+  //  loadsGyms() is called when the activity is created
+    private fun loadGyms() {
+        val selectedCounty = binding.countySpinner.selectedItem?.toString() ?: "All"
+        filterList(selectedCounty)
+    }
+
+    private fun filterList(county: String) {
+        // gets all gyms
+        val allGyms = app.gyms.findAll()
+        // if country = all returns all of them
+        val filteredList = if (county == "All") {
+            allGyms
+        } else {
+            // if country all of them
+            allGyms.filter { it.counties == county }
+        }
+        binding.recyclerView.adapter = GymAdapter(filteredList, this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -53,7 +101,6 @@ class GymListActivity : AppCompatActivity(), GymListener {
         val launcherIntent = Intent(this, GymActivity::class.java)
         launcherIntent.putExtra("gym_edit", gym)
         getClickResult.launch(launcherIntent)
-
     }
 
     private val getClickResult =
@@ -61,7 +108,7 @@ class GymListActivity : AppCompatActivity(), GymListener {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
-                binding.recyclerView.adapter = GymAdapter(app.gyms.findAll(), this)
+                loadGyms()
             }
         }
 
@@ -70,8 +117,7 @@ class GymListActivity : AppCompatActivity(), GymListener {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
-                binding.recyclerView.adapter = GymAdapter(app.gyms.findAll(), this)
-
+                loadGyms()
             }
         }
 }
