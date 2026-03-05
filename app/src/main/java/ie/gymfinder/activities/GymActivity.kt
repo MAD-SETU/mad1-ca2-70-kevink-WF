@@ -30,7 +30,6 @@ class GymActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbarAdd)
         app = application as MainApp
         binding.DeleteGym.visibility = View.GONE
-
         var edit = false
         if (intent.hasExtra("gym_edit")) {
             edit = true
