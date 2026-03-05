@@ -53,6 +53,7 @@ class GymListActivity : AppCompatActivity(), GymListener {
         val launcherIntent = Intent(this, GymActivity::class.java)
         launcherIntent.putExtra("gym_edit", gym)
         getClickResult.launch(launcherIntent)
+
     }
 
     private val getClickResult =
