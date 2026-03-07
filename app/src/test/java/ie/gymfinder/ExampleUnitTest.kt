@@ -33,6 +33,29 @@ class ExampleUnitTest {
         assertNotNull("Found Gym",testGym)
         assertEquals(sortedGyms[0].counties, "Waterford")
     }
+    // GymStore
+    @Test
+    fun createGym(){
+
+        gymStore.create(testGym)
+        assertNotNull("Found Gym",testGym)
+    }
+    @Test
+    fun removeGym(){
+
+        gymStore.delete(testGym)
+        val foundGym = gymStore.findAll().find { p -> p.id == testGym.id }
+        assertNull("Gym should be removed from store", foundGym)
+    }
+   @Test
+   fun updateGym(){
+       gymStore.create(testGym)
+       testGym.description = "updated"
+       gymStore.update(testGym)
+       assertEquals("updated",testGym.description)
+   }
+
+
 
     @Test
     fun addition_isCorrect() {

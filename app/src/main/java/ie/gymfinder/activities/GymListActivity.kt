@@ -34,11 +34,11 @@ class GymListActivity : AppCompatActivity(), GymListener {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        
+
         // Get countries from resources then adds to a mutableList
         val counties = resources.getStringArray(R.array.Counties).toMutableList()
         // Adds "All" to the start of the list
-        counties.add(0, "All")
+        counties.add(0, R.string.all.toString())
         // Creates an Adapter using the countries list and this activity as the context
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, counties)
         // changes the layouts of the drop down elements
@@ -65,7 +65,7 @@ class GymListActivity : AppCompatActivity(), GymListener {
     }
   //  loadsGyms() is called when the activity is created
     private fun loadGyms() {
-        val selectedCounty = binding.countySpinner.selectedItem?.toString() ?: "All"
+        val selectedCounty = binding.countySpinner.selectedItem?.toString() ?: R.string.all.toString()
         filterList(selectedCounty)
     }
 
@@ -73,7 +73,7 @@ class GymListActivity : AppCompatActivity(), GymListener {
         // gets all gyms
         val allGyms = app.gyms.findAll()
         // if country = all returns all of them
-        val filteredList = if (county == "All") {
+        val filteredList = if (county == R.string.all.toString()) {
             allGyms
         } else {
             // if country all of them
@@ -116,6 +116,7 @@ class GymListActivity : AppCompatActivity(), GymListener {
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) {
+//            notifyItemRangeChanged(0,app.gyms.findAll().size)
             if (it.resultCode == Activity.RESULT_OK) {
                 loadGyms()
             }

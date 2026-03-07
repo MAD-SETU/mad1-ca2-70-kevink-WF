@@ -36,7 +36,7 @@ class GymActivity : AppCompatActivity() {
             gym = intent.extras?.getParcelable("gym_edit")!!
             binding.GymTitle.setText(gym.title)
             binding.description.setText(gym.description)
-            val adapter = binding.countySpinner.adapter as ArrayAdapter<String>
+            val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.Counties))
             val spinnerPosition = adapter.getPosition(gym.counties)
             binding.countySpinner.setSelection(spinnerPosition)
             binding.btnAdd.setText(R.string.save_Gym)
@@ -58,6 +58,7 @@ class GymActivity : AppCompatActivity() {
             gym.counties = binding.countySpinner.selectedItem.toString()
             if (gym.title.isNotEmpty()) {
                 if (!edit)
+
                 app.gyms.create(gym.copy())
                 else {
                     app.gyms.update(gym.copy())

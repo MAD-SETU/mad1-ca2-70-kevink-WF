@@ -24,5 +24,7 @@
         <item>Mayo</item>
         <item>Cavan</item>
         <item>Donegal</item>
+        <item>Kerry</item>
     </string-array>
+    <string name="all">All</string>
 </resources>
