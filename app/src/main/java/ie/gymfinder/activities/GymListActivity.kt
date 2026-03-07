@@ -37,8 +37,8 @@ class GymListActivity : AppCompatActivity(), GymListener {
 
         // Get countries from resources then adds to a mutableList
         val counties = resources.getStringArray(R.array.Counties).toMutableList()
-        // Adds "All" to the start of the list
-        counties.add(0, R.string.all.toString())
+        // adds all of the counties to the list needs getString since
+        counties.add(0, getString(R.string.all))
         // Creates an Adapter using the countries list and this activity as the context
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, counties)
         // changes the layouts of the drop down elements
@@ -65,7 +65,7 @@ class GymListActivity : AppCompatActivity(), GymListener {
     }
   //  loadsGyms() is called when the activity is created
     private fun loadGyms() {
-        val selectedCounty = binding.countySpinner.selectedItem?.toString() ?: R.string.all.toString()
+        val selectedCounty = binding.countySpinner.selectedItem?.toString() ?: getString(R.string.all)
         filterList(selectedCounty)
     }
 
@@ -73,7 +73,7 @@ class GymListActivity : AppCompatActivity(), GymListener {
         // gets all gyms
         val allGyms = app.gyms.findAll()
         // if country = all returns all of them
-        val filteredList = if (county == R.string.all.toString()) {
+        val filteredList = if (county == getString(R.string.all)) {
             allGyms
         } else {
             // if country all of them
