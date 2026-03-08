@@ -17,7 +17,6 @@ import ie.gymfinder.models.GymModel
 class ExampleUnitTest {
     private lateinit var gymStore: GymMemStore
     private lateinit var testGym: GymModel
-
     @Before
     fun setUp() {
         gymStore = GymMemStore()
@@ -45,7 +44,7 @@ class ExampleUnitTest {
 
         gymStore.delete(testGym)
         val foundGym = gymStore.findAll().find { p -> p.id == testGym.id }
-        assertNull("Gym should be removed from store", foundGym)
+        assertNull("Gym removed from store", foundGym)
     }
    @Test
    fun updateGym(){

@@ -15,15 +15,15 @@ import java.util.Random
 val JSON_FILE = "gyms.json"
 val gsonBuilder: GsonBuilder = GsonBuilder().setPrettyPrinting()
 val listType = object : TypeToken<ArrayList<GymModel>>() {}.type
-
+// to make sure gym has unique id
 fun generateRandomId(): Long {
     return Random().nextLong()
 }
 
 class GymJsonStore(private val context: Context) : GymStore {
-
+    // Use a mutable list so we can add remove and update gyms while the app is running
     var gyms = mutableListOf<GymModel>()
-
+   // check if json file is there
     init {
         if (exists(JSON_FILE)) {
             deserialize()
@@ -55,17 +55,17 @@ class GymJsonStore(private val context: Context) : GymStore {
         gyms.remove(gym)
         serialize()
     }
-
+// saving to json file
     private fun serialize() {
         val jsonString = gsonBuilder.create().toJson(gyms, listType)
         write(JSON_FILE, jsonString)
     }
-
+// reading from json file
     private fun deserialize() {
         val jsonString = read(JSON_FILE)
         gyms = gsonBuilder.create().fromJson(jsonString, listType)
     }
-
+// writing to file
     private fun write(fileName: String, data: String) {
         val file = File(context.filesDir, fileName)
         try {
@@ -76,7 +76,7 @@ class GymJsonStore(private val context: Context) : GymStore {
             e.printStackTrace()
         }
     }
-
+// reads and returns raw text
     private fun read(fileName: String): String {
         val file = File(context.filesDir, fileName)
         var str = ""
@@ -88,7 +88,7 @@ class GymJsonStore(private val context: Context) : GymStore {
         }
         return str
     }
-
+ // helper to check if it exists
     private fun exists(fileName: String): Boolean {
         val file = File(context.filesDir, fileName)
         return file.exists()

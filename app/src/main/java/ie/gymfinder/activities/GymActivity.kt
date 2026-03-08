@@ -29,6 +29,7 @@ class GymActivity : AppCompatActivity() {
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
         app = application as MainApp
+        //  DeleteGym is hidden by default
         binding.DeleteGym.visibility = View.GONE
         var edit = false
         if (intent.hasExtra("gym_edit")) {
@@ -36,10 +37,12 @@ class GymActivity : AppCompatActivity() {
             gym = intent.extras?.getParcelable("gym_edit")!!
             binding.GymTitle.setText(gym.title)
             binding.description.setText(gym.description)
+            // Create an adapter to map the county list to the spinner layout
             val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.Counties))
             val spinnerPosition = adapter.getPosition(gym.counties)
             binding.countySpinner.setSelection(spinnerPosition)
             binding.btnAdd.setText(R.string.save_Gym)
+            //  DeleteGym is shown
             binding.DeleteGym.visibility = View.VISIBLE
 
 

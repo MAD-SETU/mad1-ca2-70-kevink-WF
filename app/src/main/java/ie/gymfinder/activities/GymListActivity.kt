@@ -56,8 +56,7 @@ class GymListActivity : AppCompatActivity(), GymListener {
                 val selectedCounty = parent?.getItemAtPosition(position).toString()
                 filterList(selectedCounty)
             }
-             // This is adapter is triggered the event
-            // when nothing is selected
+
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
         //  loadsGyms() is called when the activity is created
@@ -116,7 +115,7 @@ class GymListActivity : AppCompatActivity(), GymListener {
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) {
-//            notifyItemRangeChanged(0,app.gyms.findAll().size)
+            // loadsGyms() is called when the activity is created
             if (it.resultCode == Activity.RESULT_OK) {
                 loadGyms()
             }
