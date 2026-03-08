@@ -17,7 +17,6 @@ import ie.gymfinder.models.GymModel
 class ExampleUnitTest {
     private lateinit var gymStore: GymMemStore
     private lateinit var testGym: GymModel
-
     @Before
     fun setUp() {
         gymStore = GymMemStore()
@@ -33,6 +32,29 @@ class ExampleUnitTest {
         assertNotNull("Found Gym",testGym)
         assertEquals(sortedGyms[0].counties, "Waterford")
     }
+    // GymStore
+    @Test
+    fun createGym(){
+
+        gymStore.create(testGym)
+        assertNotNull("Found Gym",testGym)
+    }
+    @Test
+    fun removeGym(){
+
+        gymStore.delete(testGym)
+        val foundGym = gymStore.findAll().find { p -> p.id == testGym.id }
+        assertNull("Gym removed from store", foundGym)
+    }
+   @Test
+   fun updateGym(){
+       gymStore.create(testGym)
+       testGym.description = "updated"
+       gymStore.update(testGym)
+       assertEquals("updated",testGym.description)
+   }
+
+
 
     @Test
     fun addition_isCorrect() {
