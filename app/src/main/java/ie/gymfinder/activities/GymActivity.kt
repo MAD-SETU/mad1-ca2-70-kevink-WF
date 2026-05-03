@@ -1,23 +1,29 @@
 package ie.gymfinder.activities
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import ie.gymfinder.R
 import ie.gymfinder.databinding.ActivityMainBinding
+import ie.gymfinder.helpers.showImagePicker
 import ie.gymfinder.main.MainApp
 import ie.gymfinder.models.GymModel
 import timber.log.Timber
+import timber.log.Timber.Forest.i
 
 
 class GymActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
     var gym = GymModel()
     lateinit var app: MainApp
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +37,7 @@ class GymActivity : AppCompatActivity() {
         app = application as MainApp
         //  DeleteGym is hidden by default
         binding.DeleteGym.visibility = View.GONE
+        registerImagePickerCallback()
         var edit = false
         if (intent.hasExtra("gym_edit")) {
             edit = true
@@ -41,11 +48,14 @@ class GymActivity : AppCompatActivity() {
             val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.Counties))
             val spinnerPosition = adapter.getPosition(gym.counties)
             binding.countySpinner.setSelection(spinnerPosition)
-            binding.btnAdd.setText(R.string.save_Gym)
+            binding.btnAdd.setText(R.string.save_gym)
+            if (gym.image != Uri.EMPTY) {
+                Picasso.get()
+                    .load(gym.image)
+                    .into(binding.placemarkImage)
+            }
             //  DeleteGym is shown
             binding.DeleteGym.visibility = View.VISIBLE
-
-
         }
         binding.DeleteGym.setOnClickListener {
             app.gyms.delete(gym)
@@ -59,23 +69,42 @@ class GymActivity : AppCompatActivity() {
             gym.title = binding.GymTitle.text.toString()
             gym.description = binding.description.text.toString()
             gym.counties = binding.countySpinner.selectedItem.toString()
-            if (gym.title.isNotEmpty()) {
-                if (!edit)
-
-                app.gyms.create(gym.copy())
-                else {
+            if (gym.title.isEmpty()) {
+                Snackbar.make(it,R.string.enter_gym_title, Snackbar.LENGTH_LONG)
+                        .show()
+            } else {
+                if (edit) {
                     app.gyms.update(gym.copy())
+                } else {
+                    app.gyms.create(gym.copy())
                 }
-                Timber.Forest.i("add Button Pressed: ${gym.title}")
                 setResult(RESULT_OK)
                 finish()
             }
-            else {
-                Snackbar
-                    .make(it, R.string.EnterTitle, Snackbar.LENGTH_LONG)
-                    .show()
-            }
         }
+
+        binding.chooseImage.setOnClickListener {
+            showImagePicker(imageIntentLauncher)
+        }
+    }
+
+    private fun registerImagePickerCallback() {
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Result ${result.data!!.data}")
+                            gym.image = result.data!!.data!!
+                            Picasso.get()
+                                .load(gym.image)
+                                .into(binding.placemarkImage)
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
