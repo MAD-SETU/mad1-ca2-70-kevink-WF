@@ -1,4 +1,5 @@
 package ie.gymfinder.models
+import android.net.Uri
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
@@ -7,5 +8,6 @@ data class GymModel(
     var id: Long = 0,
     var title: String = "",
     var description: String = "",
-    var counties: String = ""
+    var counties: String = "",
+    var image: Uri = Uri.EMPTY
 ) : Parcelable
