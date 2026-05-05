@@ -49,10 +49,11 @@ class GymActivity : AppCompatActivity() {
             val spinnerPosition = adapter.getPosition(gym.counties)
             binding.countySpinner.setSelection(spinnerPosition)
             binding.btnAdd.setText(R.string.save_gym)
-            if (gym.image != Uri.EMPTY) {
+            if (gym.image.isNotEmpty()) {
                 Picasso.get()
                     .load(gym.image)
-                    .into(binding.placemarkImage)
+                    .into(binding.gymImage)
+                binding.chooseImage.setText(R.string.change_gym_image)
             }
             //  DeleteGym is shown
             binding.DeleteGym.visibility = View.VISIBLE
@@ -96,10 +97,11 @@ class GymActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
-                            gym.image = result.data!!.data!!
+                            gym.image = result.data!!.data.toString()
                             Picasso.get()
                                 .load(gym.image)
-                                .into(binding.placemarkImage)
+                                .into(binding.gymImage)
+                            binding.chooseImage.setText(R.string.change_gym_image)
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }

@@ -12,7 +12,7 @@ import java.io.FileWriter
 import java.io.IOException
 import java.util.Random
 
-val JSON_FILE = "gyms.json"
+val JSON_FILE = "gyms2.json"
 val gsonBuilder: GsonBuilder = GsonBuilder().setPrettyPrinting()
 val listType = object : TypeToken<ArrayList<GymModel>>() {}.type
 // to make sure gym has unique id
@@ -47,6 +47,7 @@ class GymJsonStore(private val context: Context) : GymStore {
             foundGym.title = gym.title
             foundGym.description = gym.description
             foundGym.counties = gym.counties
+            foundGym.image = gym.image
             serialize()
         }
     }

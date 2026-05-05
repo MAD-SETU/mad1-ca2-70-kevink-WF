@@ -9,6 +9,8 @@
     <string name="select_gym_image">Select Gym Image</string>
     <string name="enter_gym_title">Please enter a Gym Title</string>
     <string name="delete">Delete</string>
+    <string name="change_gym_image">Change Gym image</string>
+    <string name="change_placemark_image">Change Gym image</string>
     <string-array name="Counties">
         <item>Waterford</item>
         <item>Dublin</item>
