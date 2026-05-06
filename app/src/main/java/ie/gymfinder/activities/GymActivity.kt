@@ -17,6 +17,7 @@ import ie.gymfinder.databinding.ActivityMainBinding
 import ie.gymfinder.helpers.showImagePicker
 import ie.gymfinder.main.MainApp
 import ie.gymfinder.models.GymModel
+import ie.gymfinder.models.Location
 import timber.log.Timber
 import timber.log.Timber.Forest.i
 
@@ -24,6 +25,10 @@ import timber.log.Timber.Forest.i
 class GymActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
+
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+
+
     var gym = GymModel()
     lateinit var app: MainApp
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +43,7 @@ class GymActivity : AppCompatActivity() {
         //  DeleteGym is hidden by default
         binding.DeleteGym.visibility = View.GONE
         registerImagePickerCallback()
+        registerMapCallback()
         var edit = false
         if (intent.hasExtra("gym_edit")) {
             edit = true
@@ -64,7 +70,12 @@ class GymActivity : AppCompatActivity() {
             finish()
         }
 
-
+        binding.gymLocation.setOnClickListener {
+            val location = Location(52.245696, -7.139102, 15f)
+            val launcherIntent = Intent(this, MapActivity::class.java)
+                .putExtra("location", location)
+            mapIntentLauncher.launch(launcherIntent)
+        }
 
         binding.btnAdd.setOnClickListener() {
             gym.title = binding.GymTitle.text.toString()
@@ -88,7 +99,11 @@ class GymActivity : AppCompatActivity() {
             showImagePicker(imageIntentLauncher)
         }
     }
-
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { i("Map Loaded") }
+    }
     private fun registerImagePickerCallback() {
         imageIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
@@ -114,6 +129,7 @@ class GymActivity : AppCompatActivity() {
 
         return super.onCreateOptionsMenu(menu)
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 

@@ -12,6 +12,8 @@ timber = "5.0.1"
 kotlinPlugin = "2.3.0"
 gson = "2.13.2"
 picasso = "2.71828"
+googleAndroidLibrariesMapsplatformSecretsGradlePlugin = "2.0.1"
+playServicesMaps = "18.1.0"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -24,9 +26,11 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
+play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlinPlugin" }
+google-android-libraries-mapsplatform-secrets-gradle-plugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "googleAndroidLibrariesMapsplatformSecretsGradlePlugin" }
 
 
 
