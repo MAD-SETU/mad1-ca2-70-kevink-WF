@@ -12,7 +12,7 @@ import java.io.FileWriter
 import java.io.IOException
 import java.util.Random
 
-val JSON_FILE = "gyms2.json"
+val JSON_FILE = "gyms3.json"
 val gsonBuilder: GsonBuilder = GsonBuilder().setPrettyPrinting()
 val listType = object : TypeToken<ArrayList<GymModel>>() {}.type
 // to make sure gym has unique id

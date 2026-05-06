@@ -55,7 +55,7 @@ class GymActivity : AppCompatActivity() {
             val spinnerPosition = adapter.getPosition(gym.counties)
             binding.countySpinner.setSelection(spinnerPosition)
             binding.btnAdd.setText(R.string.save_gym)
-            if (gym.image.isNotEmpty()) {
+            if (gym.image.isAbsolute()) {
                 Picasso.get()
                     .load(gym.image)
                     .into(binding.gymImage)
@@ -139,7 +139,7 @@ class GymActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
-                            gym.image = result.data!!.data.toString()
+                            gym.image = result.data!!.data!!
                             Picasso.get()
                                 .load(gym.image)
                                 .into(binding.gymImage)
