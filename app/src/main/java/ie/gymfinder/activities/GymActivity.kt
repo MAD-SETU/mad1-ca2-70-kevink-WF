@@ -1,7 +1,6 @@
 package ie.gymfinder.activities
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -28,6 +27,7 @@ class GymActivity : AppCompatActivity() {
 
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
 
+    var location = Location(52.245696, -7.139102, 15f)
 
     var gym = GymModel()
     lateinit var app: MainApp
@@ -63,6 +63,9 @@ class GymActivity : AppCompatActivity() {
             }
             //  DeleteGym is shown
             binding.DeleteGym.visibility = View.VISIBLE
+            location.lat = gym.lat
+            location.lng = gym.lng
+            location.zoom = gym.zoom
         }
         binding.DeleteGym.setOnClickListener {
             app.gyms.delete(gym)
@@ -70,14 +73,15 @@ class GymActivity : AppCompatActivity() {
             finish()
         }
 
+
         binding.gymLocation.setOnClickListener {
-            val location = Location(52.245696, -7.139102, 15f)
             val launcherIntent = Intent(this, MapActivity::class.java)
                 .putExtra("location", location)
+                .putExtra("title",gym.title)
             mapIntentLauncher.launch(launcherIntent)
         }
 
-        binding.btnAdd.setOnClickListener() {
+        binding.btnAdd.setOnClickListener {
             gym.title = binding.GymTitle.text.toString()
             gym.description = binding.description.text.toString()
             gym.counties = binding.countySpinner.selectedItem.toString()
@@ -102,7 +106,23 @@ class GymActivity : AppCompatActivity() {
     private fun registerMapCallback() {
         mapIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { i("Map Loaded") }
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Location ${result.data.toString()}")
+                            //location = result.data!!.extras?.getParcelable("location",Location::class.java)!!
+                            location = result.data!!.extras?.getParcelable("location")!!
+                            gym.lat = location.lat
+                            gym.lng = location.lng
+                            gym.zoom = location.zoom
+
+                            i("Location == $location")
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
     }
     private fun registerImagePickerCallback() {
         imageIntentLauncher =

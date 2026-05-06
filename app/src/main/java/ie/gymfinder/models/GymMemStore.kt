@@ -30,6 +30,9 @@ class GymMemStore : GymStore{
             foundGym.description = gym.description
             foundGym.counties = gym.counties
             foundGym.image = gym.image
+            foundGym.lat = gym.lat
+            foundGym.lng = gym.lng
+            foundGym.zoom = gym.zoom
             logAll()
         }
     }
