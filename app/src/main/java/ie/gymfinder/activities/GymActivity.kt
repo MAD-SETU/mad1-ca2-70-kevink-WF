@@ -27,7 +27,7 @@ class GymActivity : AppCompatActivity() {
 
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
 
-    var location = Location(52.245696, -7.139102, 15f)
+    var location = Location()
 
     var gym = GymModel()
     lateinit var app: MainApp
@@ -75,9 +75,16 @@ class GymActivity : AppCompatActivity() {
 
 
         binding.gymLocation.setOnClickListener {
+            val location = Location(52.245696, -7.139102, 15f)
+            if (gym.zoom != 0f) {
+                location.lat =  gym.lat
+                location.lng = gym.lng
+                location.zoom = gym.zoom
+            }
+
             val launcherIntent = Intent(this, MapActivity::class.java)
                 .putExtra("location", location)
-                .putExtra("title",gym.title)
+                .putExtra("gym", gym)
             mapIntentLauncher.launch(launcherIntent)
         }
 
