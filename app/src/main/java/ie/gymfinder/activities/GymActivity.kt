@@ -1,12 +1,14 @@
 package ie.gymfinder.activities
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
@@ -23,9 +25,13 @@ import timber.log.Timber.Forest.i
 
 class GymActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
+//    private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var imageIntentLauncher : ActivityResultLauncher<PickVisualMediaRequest>
+
+
 
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+
 
     var location = Location()
 
@@ -55,11 +61,15 @@ class GymActivity : AppCompatActivity() {
             val spinnerPosition = adapter.getPosition(gym.counties)
             binding.countySpinner.setSelection(spinnerPosition)
             binding.btnAdd.setText(R.string.save_gym)
-            if (gym.image.isAbsolute()) {
-                Picasso.get()
-                    .load(gym.image)
-                    .into(binding.gymImage)
-                binding.chooseImage.setText(R.string.change_gym_image)
+            if (gym.image != Uri.EMPTY) {
+                try {
+                    Picasso.get()
+                        .load(gym.image)
+                        .into(binding.gymImage)
+                    binding.chooseImage.setText(R.string.change_gym_image)
+                } catch (e: Exception) {
+                    i("Error loading image: $e")
+                }
             }
             //  DeleteGym is shown
             binding.DeleteGym.visibility = View.VISIBLE
@@ -85,6 +95,7 @@ class GymActivity : AppCompatActivity() {
             val launcherIntent = Intent(this, MapActivity::class.java)
                 .putExtra("location", location)
                 .putExtra("gym", gym)
+            launcherIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             mapIntentLauncher.launch(launcherIntent)
         }
 
@@ -107,7 +118,11 @@ class GymActivity : AppCompatActivity() {
         }
 
         binding.chooseImage.setOnClickListener {
-            showImagePicker(imageIntentLauncher)
+            // showImagePicker(imageIntentLauncher,this)
+            val request = PickVisualMediaRequest.Builder()
+                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                .build()
+            imageIntentLauncher.launch(request)
         }
     }
     private fun registerMapCallback() {
@@ -132,23 +147,30 @@ class GymActivity : AppCompatActivity() {
             }
     }
     private fun registerImagePickerCallback() {
-        imageIntentLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { result ->
-                when(result.resultCode){
-                    RESULT_OK -> {
-                        if (result.data != null) {
-                            i("Got Result ${result.data!!.data}")
-                            gym.image = result.data!!.data!!
-                            Picasso.get()
-                                .load(gym.image)
-                                .into(binding.gymImage)
-                            binding.chooseImage.setText(R.string.change_gym_image)
-                        } // end of if
-                    }
-                    RESULT_CANCELED -> { } else -> { }
+        imageIntentLauncher = registerForActivityResult(
+            ActivityResultContracts.PickVisualMedia()
+        ) { uri ->
+            if (uri != null) {
+                try {
+                    contentResolver.takePersistableUriPermission(
+                        uri,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    )
+                    gym.image = uri
+                    i("IMG :: ${gym.image}")
+                    Picasso.get()
+                        .load(gym.image)
+                        .into(binding.gymImage)
+                    binding.chooseImage.setText(R.string.change_gym_image)
+                } catch (e: Exception) {
+                    i("Error taking persistable permission: $e")
+                    gym.image = uri
+                    Picasso.get()
+                        .load(gym.image)
+                        .into(binding.gymImage)
                 }
             }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

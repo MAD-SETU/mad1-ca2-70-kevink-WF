@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "961349604605",
+    "project_id": "gymfinder-5e976",
+    "storage_bucket": "gymfinder-5e976.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:961349604605:android:d6ec878fe8afb72058da94",
+        "android_client_info": {
+          "package_name": "ie.gymfinder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClCB50yL34jtNu52W2__tPrTHSKK85vRE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
