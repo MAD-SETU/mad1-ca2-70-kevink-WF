@@ -1,7 +1,6 @@
 package ie.gymfinder.activities
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -17,6 +16,7 @@ import ie.gymfinder.databinding.ActivityMainBinding
 import ie.gymfinder.helpers.showImagePicker
 import ie.gymfinder.main.MainApp
 import ie.gymfinder.models.GymModel
+import ie.gymfinder.models.Location
 import timber.log.Timber
 import timber.log.Timber.Forest.i
 
@@ -24,6 +24,11 @@ import timber.log.Timber.Forest.i
 class GymActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
+
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+
+    var location = Location()
+
     var gym = GymModel()
     lateinit var app: MainApp
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +43,7 @@ class GymActivity : AppCompatActivity() {
         //  DeleteGym is hidden by default
         binding.DeleteGym.visibility = View.GONE
         registerImagePickerCallback()
+        registerMapCallback()
         var edit = false
         if (intent.hasExtra("gym_edit")) {
             edit = true
@@ -49,13 +55,17 @@ class GymActivity : AppCompatActivity() {
             val spinnerPosition = adapter.getPosition(gym.counties)
             binding.countySpinner.setSelection(spinnerPosition)
             binding.btnAdd.setText(R.string.save_gym)
-            if (gym.image != Uri.EMPTY) {
+            if (gym.image.isAbsolute()) {
                 Picasso.get()
                     .load(gym.image)
-                    .into(binding.placemarkImage)
+                    .into(binding.gymImage)
+                binding.chooseImage.setText(R.string.change_gym_image)
             }
             //  DeleteGym is shown
             binding.DeleteGym.visibility = View.VISIBLE
+            location.lat = gym.lat
+            location.lng = gym.lng
+            location.zoom = gym.zoom
         }
         binding.DeleteGym.setOnClickListener {
             app.gyms.delete(gym)
@@ -64,8 +74,21 @@ class GymActivity : AppCompatActivity() {
         }
 
 
+        binding.gymLocation.setOnClickListener {
+            val location = Location(52.245696, -7.139102, 15f)
+            if (gym.zoom != 0f) {
+                location.lat =  gym.lat
+                location.lng = gym.lng
+                location.zoom = gym.zoom
+            }
 
-        binding.btnAdd.setOnClickListener() {
+            val launcherIntent = Intent(this, MapActivity::class.java)
+                .putExtra("location", location)
+                .putExtra("gym", gym)
+            mapIntentLauncher.launch(launcherIntent)
+        }
+
+        binding.btnAdd.setOnClickListener {
             gym.title = binding.GymTitle.text.toString()
             gym.description = binding.description.text.toString()
             gym.counties = binding.countySpinner.selectedItem.toString()
@@ -87,7 +110,27 @@ class GymActivity : AppCompatActivity() {
             showImagePicker(imageIntentLauncher)
         }
     }
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Location ${result.data.toString()}")
+                            //location = result.data!!.extras?.getParcelable("location",Location::class.java)!!
+                            location = result.data!!.extras?.getParcelable("location")!!
+                            gym.lat = location.lat
+                            gym.lng = location.lng
+                            gym.zoom = location.zoom
 
+                            i("Location == $location")
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
     private fun registerImagePickerCallback() {
         imageIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
@@ -99,7 +142,8 @@ class GymActivity : AppCompatActivity() {
                             gym.image = result.data!!.data!!
                             Picasso.get()
                                 .load(gym.image)
-                                .into(binding.placemarkImage)
+                                .into(binding.gymImage)
+                            binding.chooseImage.setText(R.string.change_gym_image)
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }
@@ -112,6 +156,7 @@ class GymActivity : AppCompatActivity() {
 
         return super.onCreateOptionsMenu(menu)
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 

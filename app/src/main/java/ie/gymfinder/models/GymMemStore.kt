@@ -29,6 +29,10 @@ class GymMemStore : GymStore{
             foundGym.title = gym.title
             foundGym.description = gym.description
             foundGym.counties = gym.counties
+            foundGym.image = gym.image
+            foundGym.lat = gym.lat
+            foundGym.lng = gym.lng
+            foundGym.zoom = gym.zoom
             logAll()
         }
     }

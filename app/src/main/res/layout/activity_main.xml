@@ -88,9 +88,9 @@
                     tools:ignore="VisualLintButtonSize" />
 
                 <ImageView
-                    android:id="@+id/placemarkImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/gymImage"
+                    android:layout_width="357dp"
+                    android:layout_height="244dp"
                     android:importantForAccessibility="no"
                     app:srcCompat="@mipmap/ic_launcher"
                     tools:ignore="ImageContrastCheck" />
@@ -104,6 +104,18 @@
                     android:padding="8dp"
                     android:stateListAnimator="@null"
                     android:text="@string/button_addGym"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/gymLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:backgroundTint="@color/md_theme_primary"
+                    android:padding="8dp"
+                    android:stateListAnimator="@null"
+                    android:text="@string/button_location"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
