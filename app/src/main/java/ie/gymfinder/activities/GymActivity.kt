@@ -50,18 +50,22 @@ class GymActivity : AppCompatActivity() {
         binding.DeleteGym.visibility = View.GONE
         registerImagePickerCallback()
         registerMapCallback()
+
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.Counties))
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.countySpinner.adapter = adapter
+
         var edit = false
         if (intent.hasExtra("gym_edit")) {
             edit = true
             gym = intent.extras?.getParcelable("gym_edit")!!
             binding.GymTitle.setText(gym.title)
             binding.description.setText(gym.description)
-            // Create an adapter to map the county list to the spinner layout
-            val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, resources.getStringArray(R.array.Counties))
+
             val spinnerPosition = adapter.getPosition(gym.counties)
             binding.countySpinner.setSelection(spinnerPosition)
             binding.btnAdd.setText(R.string.save_gym)
-            if (gym.image != Uri.EMPTY) {
+            if (gym.image.isNotEmpty()) {
                 try {
                     Picasso.get()
                         .load(gym.image)
@@ -156,7 +160,7 @@ class GymActivity : AppCompatActivity() {
                         uri,
                         Intent.FLAG_GRANT_READ_URI_PERMISSION
                     )
-                    gym.image = uri
+                    gym.image = uri.toString()
                     i("IMG :: ${gym.image}")
                     Picasso.get()
                         .load(gym.image)
@@ -164,7 +168,7 @@ class GymActivity : AppCompatActivity() {
                     binding.chooseImage.setText(R.string.change_gym_image)
                 } catch (e: Exception) {
                     i("Error taking persistable permission: $e")
-                    gym.image = uri
+                    gym.image = uri.toString()
                     Picasso.get()
                         .load(gym.image)
                         .into(binding.gymImage)

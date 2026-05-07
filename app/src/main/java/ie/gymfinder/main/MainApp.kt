@@ -2,13 +2,11 @@ package ie.gymfinder.main
 
 import android.app.Application
 
-import ie.gymfinder.models.GymJsonStore
+import ie.gymfinder.models.GymFireStore
 import ie.gymfinder.models.GymStore
 import timber.log.Timber
 import timber.log.Timber.Forest.i
-import com.google.firebase.Firebase
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.database
 
 class MainApp : Application() {
     lateinit var db: DatabaseReference
@@ -20,8 +18,8 @@ class MainApp : Application() {
 
         Timber.plant(Timber.DebugTree())
         // gyms = GymMemStore()
-        gyms = GymJsonStore(applicationContext)
-//        gyms = GymFirebase(applicationContext)
+        // gyms = GymJsonStore(applicationContext)
+        gyms = GymFireStore(applicationContext)
 
         i("GymFinder started")
     }

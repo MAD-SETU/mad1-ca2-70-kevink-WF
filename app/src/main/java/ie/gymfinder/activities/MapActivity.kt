@@ -89,7 +89,7 @@ class MapActivity : AppCompatActivity(),
 
         title.text = gym.title
         desc.text = gym.description
-        if (gym.image != Uri.EMPTY) {
+        if (gym.image.isNotEmpty()) {
             try {
                 Picasso.get()
                     .load(gym.image)
