@@ -23,7 +23,7 @@ import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import ie.gymfinder.models.GymModel
 import android.widget.ImageView
-import android.R.attr.data
+import android.net.Uri
 import com.squareup.picasso.Picasso
 
 class MapActivity : AppCompatActivity(),
@@ -89,10 +89,16 @@ class MapActivity : AppCompatActivity(),
 
         title.text = gym.title
         desc.text = gym.description
-         Picasso.get()
-            .load(gym.image)
-            .into(image)
-         return view
+        if (gym.image.isNotEmpty()) {
+            try {
+                Picasso.get()
+                    .load(gym.image)
+                    .into(image)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        return view
 
     }
     override fun getInfoContents(marker: Marker): View? {

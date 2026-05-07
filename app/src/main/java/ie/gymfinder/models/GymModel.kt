@@ -9,7 +9,7 @@ data class GymModel(
     var title: String = "",
     var description: String = "",
     var counties: String = "",
-    var image: Uri = Uri.EMPTY,
+    var image: String = "",
     var lat : Double = 0.0,
     var lng: Double = 0.0,
     var zoom: Float = 0f

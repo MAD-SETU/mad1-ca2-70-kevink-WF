@@ -99,6 +99,7 @@ class GymListActivity : AppCompatActivity(), GymListener {
     override fun onGymClick(gym: GymModel) {
         val launcherIntent = Intent(this, GymActivity::class.java)
         launcherIntent.putExtra("gym_edit", gym)
+        launcherIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         getClickResult.launch(launcherIntent)
     }
 

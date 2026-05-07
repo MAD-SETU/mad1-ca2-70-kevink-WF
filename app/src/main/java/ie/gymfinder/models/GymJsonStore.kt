@@ -1,21 +1,21 @@
 package ie.gymfinder.models
 
 import android.content.Context
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import android.net.Uri
+import com.google.gson.*
 import com.google.gson.reflect.TypeToken
-import java.io.BufferedReader
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileReader
-import java.io.FileWriter
-import java.io.IOException
-import java.util.Random
+import ie.gymfinder.helpers.*
+import timber.log.Timber
+import java.lang.reflect.Type
+import java.util.*
 
 val JSON_FILE = "gyms3.json"
-val gsonBuilder: GsonBuilder = GsonBuilder().setPrettyPrinting()
-val listType = object : TypeToken<ArrayList<GymModel>>() {}.type
-// to make sure gym has unique id
+val gson: Gson = GsonBuilder().setPrettyPrinting()
+    .registerTypeHierarchyAdapter(Uri::class.java, UriParser())
+    .create()
+
+val listType: Type = object : TypeToken<ArrayList<GymModel>>() {}.type
+
 fun generateRandomId(): Long {
     return Random().nextLong()
 }
@@ -23,14 +23,16 @@ fun generateRandomId(): Long {
 class GymJsonStore(private val context: Context) : GymStore {
     // Use a mutable list so we can add remove and update gyms while the app is running
     var gyms = mutableListOf<GymModel>()
-   // check if json file is there
+
+    // check if json file is there
     init {
-        if (exists(JSON_FILE)) {
+        if (exists(context, JSON_FILE)) {
             deserialize()
         }
     }
 
     override fun findAll(): MutableList<GymModel> {
+        logAll()
         return gyms
     }
 
@@ -59,42 +61,34 @@ class GymJsonStore(private val context: Context) : GymStore {
         gyms.remove(gym)
         serialize()
     }
-// saving to json file
+
+    // saving to json file
     private fun serialize() {
-        val jsonString = gsonBuilder.create().toJson(gyms, listType)
-        write(JSON_FILE, jsonString)
+        val jsonString = gson.toJson(gyms, listType)
+        write(context, JSON_FILE, jsonString)
     }
-// reading from json file
+
+    // reading from json file
     private fun deserialize() {
-        val jsonString = read(JSON_FILE)
-        gyms = gsonBuilder.create().fromJson(jsonString, listType)
+        val jsonString = read(context, JSON_FILE)
+        gyms = gson.fromJson(jsonString, listType) ?: mutableListOf()
     }
-// writing to file
-    private fun write(fileName: String, data: String) {
-        val file = File(context.filesDir, fileName)
-        try {
-            val outputStreamWriter = BufferedWriter(FileWriter(file))
-            outputStreamWriter.write(data)
-            outputStreamWriter.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
+
+    private fun logAll() {
+        gyms.forEach { Timber.i("$it") }
+    }
+}
+
+class UriParser : JsonDeserializer<Uri>, JsonSerializer<Uri> {
+    override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): Uri {
+        return if (json != null && json.isJsonPrimitive) {
+            Uri.parse(json.asString)
+        } else {
+            Uri.EMPTY
         }
     }
-// reads and returns raw text
-    private fun read(fileName: String): String {
-        val file = File(context.filesDir, fileName)
-        var str = ""
-        try {
-            val bufferedReader = BufferedReader(FileReader(file))
-            str = bufferedReader.use { it.readText() }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return str
-    }
- // helper to check if it exists
-    private fun exists(fileName: String): Boolean {
-        val file = File(context.filesDir, fileName)
-        return file.exists()
+
+    override fun serialize(src: Uri?, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement {
+        return JsonPrimitive(src.toString())
     }
 }
