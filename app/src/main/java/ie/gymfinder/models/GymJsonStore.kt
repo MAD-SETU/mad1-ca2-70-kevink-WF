@@ -62,6 +62,11 @@ class GymJsonStore(private val context: Context) : GymStore {
         serialize()
     }
 
+    override fun findById(id: Long): GymModel? {
+        val foundGym: GymModel? = gyms.find { it.id == id }
+        return foundGym
+    }
+
     // saving to json file
     private fun serialize() {
         val jsonString = gson.toJson(gyms, listType)

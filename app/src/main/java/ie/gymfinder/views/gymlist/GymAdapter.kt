@@ -1,9 +1,8 @@
-package ie.gymfinder.adapters
+package ie.gymfinder.views.gymlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import android.net.Uri
 import com.squareup.picasso.Picasso
 import ie.gymfinder.models.GymModel
 import ie.gymfinder.databinding.CardGymBinding

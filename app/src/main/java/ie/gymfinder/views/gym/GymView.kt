@@ -1,62 +1,109 @@
 package ie.gymfinder.views.gym
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import ie.gymfinder.R
-import ie.gymfinder.views.gym.GymPresenter
-import ie.gymfinder.adapters.GymAdapter
-import ie.gymfinder.adapters.GymListener
-import ie.gymfinder.databinding.ActivityGymListBinding
+import ie.gymfinder.databinding.ActivityMainBinding
 import ie.gymfinder.main.MainApp
 import ie.gymfinder.models.GymModel
+import timber.log.Timber.Forest.i
 
-class GymView : AppCompatActivity(), GymListener {
+class GymView : AppCompatActivity() {
 
-    lateinit var app: MainApp
-    private lateinit var binding: ActivityGymListBinding
+
+    private lateinit var binding: ActivityMainBinding
     lateinit var presenter: GymPresenter
-    private var position: Int = 0
+    var gym = GymModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityGymListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.toolbar.title = title
-        setSupportActionBar(binding.toolbar)
-        presenter = GymPresenter(this)
-        app = application as MainApp
 
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.toolbarAdd.title = title
+        setSupportActionBar(binding.toolbarAdd)
+
+        presenter = GymPresenter(this)
+        setupSpinner()
         val layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.layoutManager = layoutManager
-        loadGyms()
+
+        binding.chooseImage.setOnClickListener {
+            presenter.cacheGym(
+                binding.GymTitle.text.toString(),
+                binding.description.text.toString(),
+                binding.countySpinner.selectedItem.toString()
+            )
+            presenter.doSelectImage()
+        }
+        binding.gymLocation.setOnClickListener {
+            presenter.cacheGym(
+                binding.GymTitle.text.toString(),
+                binding.description.text.toString(),
+                binding.countySpinner.selectedItem.toString()
+            )
+            presenter.doSetLocation()
+        }
+
+        binding.btnAdd.setOnClickListener {
+            presenter.doAddOrSave(
+                binding.GymTitle.text.toString(),
+                binding.description.text.toString(),
+                binding.countySpinner.selectedItem.toString()
+            )
+        }
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_add -> { presenter.doAddGym() }
-            R.id.item_map -> { presenter.doShowGymsMap() }
+            R.id.item_delete -> {
+                presenter.doDelete()
+            }
+            R.id.item_cancel -> {
+                presenter.doCancel()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
-    override fun onGymClick(gym: GymModel, position: Int) {
-        this.position = position
-        presenter.doEditPlacemark(gym, this.position)
+
+    fun showGym(gym: GymModel) {
+        binding.GymTitle.setText(gym.title)
+        binding.description.setText(gym.description)
+        binding.btnAdd.setText(R.string.save_gym)
+        Picasso.get()
+            .load(gym.image)
+            .into(binding.gymImage)
+        if (gym.image.isEmpty()) {
+            binding.chooseImage.setText(R.string.change_gym_image)
+        }
+
     }
-    private fun loadGyms() {
-        binding.recyclerView.adapter = GymAdapter(presenter.getGyms(), this)
-        onRefresh()
+    fun updateImage(image: Uri){
+        i("Image updated")
+        Picasso.get()
+            .load(image)
+            .into(binding.gymImage)
+        binding.chooseImage.setText(R.string.change_gym_image)
     }
-    fun onRefresh() {
-        binding.recyclerView.adapter?.
-        notifyItemRangeChanged(0,presenter.getGyms().size)
-    }
-    fun onDelete(position : Int) {
-        binding.recyclerView.adapter?.notifyItemRemoved(position)
+    private fun setupSpinner() {
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            resources.getStringArray(R.array.Counties)
+        )
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.countySpinner.adapter = adapter
     }
 }
