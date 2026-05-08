@@ -8,6 +8,8 @@
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".main.MainApp"
@@ -20,8 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.GymMapsActivity"
+            android:name=".views.setting.SettingView"
             android:exported="false"
+            android:label="@string/title_activity_map"
             android:theme="@style/AppTheme" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
@@ -39,11 +42,11 @@
             android:value="@string/MAPS_API_KEY" />
 
         <activity
-            android:name=".activities.MapActivity"
+            android:name=".views.editLocation.EditLocationView"
             android:exported="false"
             android:label="@string/title_activity_map" />
         <activity
-            android:name=".activities.GymListActivity"
+            android:name=".views.gymlist.GymListView"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,7 +55,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.GymActivity"
+            android:name=".views.gym.GymView"
+            android:exported="false" />
+        <activity
+            android:name=".views.map.GymMapView"
+            android:exported="false"
+            android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".activities.MapActivity"
             android:exported="false" />
     </application>
 

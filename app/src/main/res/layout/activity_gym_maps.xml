@@ -6,7 +6,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.GymMapsActivity">
+    tools:context=".views.map.GymMapView">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout2"
@@ -30,7 +30,7 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/content_gym_maps"
+        layout="@layout/content_gyms_maps"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

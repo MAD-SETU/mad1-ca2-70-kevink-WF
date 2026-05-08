@@ -68,4 +68,9 @@ class GymFireStore(private val context: Context) : GymStore {
             .document(gym.id.toString())
             .delete()
     }
+
+    override fun findById(id: Long): GymModel? {
+        val foundGym: GymModel? = gyms.find { it.id == id }
+        return foundGym
+    }
 }

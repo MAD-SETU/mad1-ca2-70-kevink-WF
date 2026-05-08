@@ -11,4 +11,8 @@
         android:icon="@android:drawable/ic_menu_mapmode"
         android:title="@string/title_activity_map"
         app:showAsAction="always" />
+    <item
+        android:title="@string/Setting"
+        android:id="@+id/setting"/>
+    <item android:title="Item"/>
 </menu>

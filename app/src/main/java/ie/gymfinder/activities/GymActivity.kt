@@ -25,14 +25,9 @@ import timber.log.Timber.Forest.i
 
 class GymActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-//    private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
+
     private lateinit var imageIntentLauncher : ActivityResultLauncher<PickVisualMediaRequest>
-
-
-
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
-
-
     var location = Location()
 
     var gym = GymModel()
@@ -40,7 +35,7 @@ class GymActivity : AppCompatActivity() {
     var edit = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        // for editing
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -129,7 +124,7 @@ class GymActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Location ${result.data.toString()}")
-                            //location = result.data!!.extras?.getParcelable("location",Location::class.java)!!
+                            location = result.data!!.extras?.getParcelable("location",Location::class.java)!!
                             location = result.data!!.extras?.getParcelable("location")!!
                             gym.lat = location.lat
                             gym.lng = location.lng
