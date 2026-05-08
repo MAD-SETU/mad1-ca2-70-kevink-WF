@@ -2,13 +2,15 @@ package ie.gymfinder.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import ie.gymfinder.databinding.ActivityGymMapsBinding
 import ie.gymfinder.databinding.ContentGymMapsBinding
 import ie.gymfinder.main.MainApp
-class GymMapsActivity : AppCompatActivity() {
+import com.google.android.gms.maps.model.Marker
+class GymMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
     lateinit var app: MainApp
     private lateinit var binding: ActivityGymMapsBinding
     private lateinit var contentBinding: ContentGymMapsBinding
@@ -36,10 +38,17 @@ class GymMapsActivity : AppCompatActivity() {
     private fun configureMap() {
         map.uiSettings.isZoomControlsEnabled = true
         app.gyms.findAll().forEach {
-            val loc = LatLng(it.lat, it.lng)
+            val loc = LatLng(it.lat, it.lng,)
             val options = MarkerOptions().title(it.title).position(loc)
+            val zoom = it.zoom
             map.addMarker(options)?.tag = it.id
         }
+        map.setOnMarkerClickListener(this)
+    }
+    override fun onMarkerClick(marker: Marker): Boolean {
+        contentBinding.currentTitle.text = marker.title
+        contentBinding.currentImage
+        return false
     }
 
     override fun onDestroy() {
