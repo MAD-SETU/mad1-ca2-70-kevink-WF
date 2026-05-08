@@ -1,4 +1,4 @@
-package org.wit.placemark.views.editlocation
+package ie.gymfinder.views.editLocation
 
 import android.app.Activity
 import android.content.Intent
@@ -7,7 +7,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-
+import ie.gymfinder.views.editLocation.EditLocationView
+import ie.gymfinder.models.Location
 
 class EditLocationPresenter (val view: EditLocationView) {
 

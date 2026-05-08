@@ -1,4 +1,4 @@
-package ie.gymfinder.activities
+package ie.gymfinder.views.gym
 
 import android.os.Bundle
 import android.view.Menu
@@ -6,13 +6,12 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import ie.gymfinder.R
+import ie.gymfinder.views.gym.GymPresenter
 import ie.gymfinder.adapters.GymAdapter
 import ie.gymfinder.adapters.GymListener
 import ie.gymfinder.databinding.ActivityGymListBinding
 import ie.gymfinder.main.MainApp
 import ie.gymfinder.models.GymModel
-import timber.log.Timber.Forest.i
-
 
 class GymView : AppCompatActivity(), GymListener {
 

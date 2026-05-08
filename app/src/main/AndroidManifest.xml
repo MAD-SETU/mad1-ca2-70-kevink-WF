@@ -39,7 +39,7 @@
             android:value="@string/MAPS_API_KEY" />
 
         <activity
-            android:name=".activities.MapActivity"
+            android:name=".views.editLocation.EditLocationView"
             android:exported="false"
             android:label="@string/title_activity_map" />
         <activity
@@ -52,7 +52,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.GymActivity"
+            android:name=".views.gym.GymView"
             android:exported="false" />
     </application>
 

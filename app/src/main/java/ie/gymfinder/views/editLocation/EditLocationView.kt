@@ -1,4 +1,4 @@
-package ie.setu
+package ie.gymfinder.views.editLocation
 
 import android.os.Bundle
 import androidx.activity.addCallback
@@ -7,6 +7,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Marker
+import ie.gymfinder.R
+import ie.gymfinder.models.Location
 
 class EditLocationView : AppCompatActivity(), OnMapReadyCallback,
     GoogleMap.OnMarkerDragListener,
