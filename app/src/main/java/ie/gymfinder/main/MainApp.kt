@@ -9,6 +9,9 @@ import timber.log.Timber.Forest.i
 import com.google.firebase.database.DatabaseReference
 import ie.gymfinder.models.GymJsonStore
 import ie.gymfinder.models.GymMemStore
+import android.content.Context
+import androidx.appcompat.app.AppCompatDelegate
+
 class MainApp : Application() {
     lateinit var db: DatabaseReference
     lateinit var gyms: GymStore
@@ -18,6 +21,8 @@ class MainApp : Application() {
         super.onCreate()
 
         Timber.plant(Timber.DebugTree())
+
+
 //         gyms = GymMemStore()
          gyms = GymJsonStore(applicationContext)
 //        gyms = GymFireStore(applicationContext)

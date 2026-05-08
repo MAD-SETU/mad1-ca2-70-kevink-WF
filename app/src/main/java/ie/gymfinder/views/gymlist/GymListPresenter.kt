@@ -9,6 +9,7 @@ import ie.gymfinder.main.MainApp
 import ie.gymfinder.models.GymModel
 import ie.gymfinder.views.gym.GymView
 import ie.gymfinder.views.map.GymMapView
+import ie.gymfinder.views.setting.SettingView
 
 class GymListPresenter(val view: GymListView ) {
     var app: MainApp
@@ -69,5 +70,10 @@ class GymListPresenter(val view: GymListView ) {
         mapIntentLauncher =
             view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             {  }
+    }
+
+    fun doShowSetting() {
+        val launcherIntent = Intent(view, SettingView::class.java)
+        mapIntentLauncher.launch(launcherIntent)
     }
 }

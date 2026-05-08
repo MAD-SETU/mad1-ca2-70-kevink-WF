@@ -3,9 +3,11 @@ package ie.gymfinder.views.map
 
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
+import com.google.common.io.Files.map
 import com.squareup.picasso.Picasso
 import ie.gymfinder.databinding.ActivityGymMapsBinding
 import ie.gymfinder.databinding.ContentGymsMapsBinding
@@ -25,9 +27,7 @@ class GymMapView : AppCompatActivity() , GoogleMap.OnMarkerClickListener{
         super.onCreate(savedInstanceState)
         app = application as MainApp
 
-        app.gyms.findAll().forEach {
-            i("Gym: ${it.title} lat=${it.lat} lng=${it.lng} zoom=${it.zoom}")
-        }
+
         binding = ActivityGymMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
@@ -53,6 +53,7 @@ class GymMapView : AppCompatActivity() , GoogleMap.OnMarkerClickListener{
         presenter.doMarkerSelected(marker)
         return false
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

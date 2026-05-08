@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
+import com.google.android.gms.location.FusedLocationProviderClient
 //import ie.gymfinder.activities.GymActivity
 import ie.gymfinder.main.MainApp
 import ie.gymfinder.models.GymModel
@@ -18,6 +19,9 @@ import timber.log.Timber
 class GymPresenter(val view: GymView) {
     var gym = GymModel()
     var app: MainApp = view.application as MainApp
+    private lateinit var locationClient: FusedLocationProviderClient
+    private val LOCATION_PERMISSION_REQUEST = 1001
+
     private lateinit var imageIntentLauncher : ActivityResultLauncher<PickVisualMediaRequest>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     var edit = false
@@ -62,6 +66,7 @@ class GymPresenter(val view: GymView) {
             .build()
         imageIntentLauncher.launch(request)
     }
+
     fun doSetLocation() {
         val location = Location(52.245696, -7.139102, 15f)
         if (gym.zoom != 0f) {
@@ -70,7 +75,9 @@ class GymPresenter(val view: GymView) {
             location.zoom = gym.zoom
         }
         val launcherIntent = Intent(view, EditLocationView::class.java)
-            .putExtra("location", location)
+            .putExtra("location", location
+            )
+            .putExtra("gym",gym)
         mapIntentLauncher.launch(launcherIntent)
     }
 

@@ -61,6 +61,7 @@ class GymListView : AppCompatActivity(), GymListener {
         when (item.itemId) {
             R.id.item_add -> { presenter.doAddGym() }
             R.id.item_map -> { presenter.doShowGymsMap() }
+            R.id.setting ->  { presenter.doShowSetting()}
         }
         return super.onOptionsItemSelected(item)
     }
