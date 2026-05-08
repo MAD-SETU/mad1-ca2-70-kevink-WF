@@ -37,7 +37,6 @@ class GymActivity : AppCompatActivity() {
 
     var gym = GymModel()
     lateinit var app: MainApp
-    var edit = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,6 +46,8 @@ class GymActivity : AppCompatActivity() {
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
         app = application as MainApp
+        //  DeleteGym is hidden by default
+        binding.DeleteGym.visibility = View.GONE
         registerImagePickerCallback()
         registerMapCallback()
 
@@ -54,6 +55,7 @@ class GymActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.countySpinner.adapter = adapter
 
+        var edit = false
         if (intent.hasExtra("gym_edit")) {
             edit = true
             gym = intent.extras?.getParcelable("gym_edit")!!
@@ -73,11 +75,17 @@ class GymActivity : AppCompatActivity() {
                     i("Error loading image: $e")
                 }
             }
+            //  DeleteGym is shown
+            binding.DeleteGym.visibility = View.VISIBLE
             location.lat = gym.lat
             location.lng = gym.lng
             location.zoom = gym.zoom
         }
-
+        binding.DeleteGym.setOnClickListener {
+            app.gyms.delete(gym)
+            setResult(RESULT_OK)
+            finish()
+        }
 
 
         binding.gymLocation.setOnClickListener {
@@ -171,20 +179,17 @@ class GymActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_gym, menu)
-        if (edit) menu.getItem(0).isVisible = true
+
         return super.onCreateOptionsMenu(menu)
     }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         when (item.itemId) {
-            R.id.item_delete -> {
-                setResult(99)
-                app.gyms.delete(gym)
-                finish()
-            }
             R.id.item_cancel -> { finish() }
         }
+
         return super.onOptionsItemSelected(item)
     }
 }

@@ -9,7 +9,7 @@ import ie.gymfinder.models.GymModel
 import ie.gymfinder.databinding.CardGymBinding
 
 interface GymListener {
-    fun onGymClick(gym: GymModel,position: Int)
+    fun onGymClick(gym: GymModel)
 }
 
 class GymAdapter(private var gyms: List<GymModel>,
@@ -36,9 +36,13 @@ class GymAdapter(private var gyms: List<GymModel>,
             binding.gymTitle.text = gym.title
             binding.description.text = gym.description
             if (gym.image.isNotEmpty()) {
-                Picasso.get().load(gym.image).resize(200, 200).into(binding.imageIcon)
+                try {
+                    Picasso.get().load(gym.image).resize(200, 200).into(binding.imageIcon)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
-            binding.root.setOnClickListener { listener.onGymClick(gym, adapterPosition) }
+            binding.root.setOnClickListener { listener.onGymClick(gym) }
         }
     }
 

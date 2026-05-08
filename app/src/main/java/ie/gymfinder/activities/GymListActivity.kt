@@ -22,7 +22,6 @@ class GymListActivity : AppCompatActivity(), GymListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityGymListBinding
-    private var position: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,18 +92,13 @@ class GymListActivity : AppCompatActivity(), GymListener {
                 val launcherIntent = Intent(this, GymActivity::class.java)
                 getResult.launch(launcherIntent)
             }
-            R.id.item_map -> {
-                val launcherIntent = Intent(this, GymMapsActivity::class.java)
-                startActivity(launcherIntent)
-            }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onGymClick(gym: GymModel, pos: Int) {
+    override fun onGymClick(gym: GymModel) {
         val launcherIntent = Intent(this, GymActivity::class.java)
         launcherIntent.putExtra("gym_edit", gym)
-        position = pos
         launcherIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         getClickResult.launch(launcherIntent)
     }
@@ -113,12 +107,9 @@ class GymListActivity : AppCompatActivity(), GymListener {
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) {
-            if (it.resultCode == RESULT_OK) {
-                (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.gyms.findAll().size)
+            if (it.resultCode == Activity.RESULT_OK) {
+                loadGyms()
             }
-            else // Deleting
-                if (it.resultCode == 99) (binding.recyclerView.adapter)?.notifyItemRemoved(position)
         }
 
     private val getResult =
