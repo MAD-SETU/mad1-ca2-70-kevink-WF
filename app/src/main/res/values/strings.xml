@@ -36,13 +36,8 @@
     <string name="all">All</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="title_activity_map">MapActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
     <string name="select">select counties</string>
     <string name="Setting">Settings</string>
-
-
+    <string name="gymrating">Gym Rating</string>
+    <string name="gym_image">Gym Image</string>
 </resources>

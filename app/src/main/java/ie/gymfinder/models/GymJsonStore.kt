@@ -53,6 +53,7 @@ class GymJsonStore(private val context: Context) : GymStore {
             foundGym.lat = gym.lat
             foundGym.lng = gym.lng
             foundGym.zoom = gym.zoom
+            foundGym.rating = gym.rating
             serialize()
         }
     }

@@ -34,6 +34,7 @@ class GymAdapter(private var gyms: List<GymModel>,
         fun bind(gym: GymModel, listener: GymListener) {
             binding.gymTitle.text = gym.title
             binding.description.text = gym.description
+            binding.ratingBar.rating = gym.rating
             if (gym.image.isNotEmpty()) {
                 Picasso.get().load(gym.image).resize(200, 200).into(binding.imageIcon)
             }
