@@ -2,6 +2,7 @@ package ie.gymfinder.views.setting
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import ie.gymfinder.R
 import ie.gymfinder.databinding.ActivitySettingBinding
 import ie.gymfinder.main.MainApp
 
@@ -19,7 +20,7 @@ class SettingView : AppCompatActivity() {
         app = application as MainApp
         presenter = SettingPresenter(this)
 
-        binding.toolbarAdd.title = "Settings"
+        binding.toolbarAdd.title = R.string.Setting.toString()
         setSupportActionBar(binding.toolbarAdd)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

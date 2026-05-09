@@ -24,8 +24,8 @@ class MainApp : Application() {
 
 
 //         gyms = GymMemStore()
-         gyms = GymJsonStore(applicationContext)
-//        gyms = GymFireStore(applicationContext)
+//         gyms = GymJsonStore(applicationContext)
+        gyms = GymFireStore(applicationContext)
 
         i("GymFinder started")
     }

@@ -1,21 +1,17 @@
 package ie.gymfinder.views.gym
 
-import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
-import com.google.android.gms.location.FusedLocationProviderClient
-//import ie.gymfinder.activities.GymActivity
 import ie.gymfinder.main.MainApp
 import ie.gymfinder.models.GymModel
 import ie.gymfinder.models.Location
 import ie.gymfinder.views.editLocation.EditLocationView
-import org.checkerframework.checker.units.qual.g
 import timber.log.Timber
-import android.R.attr.rating
+
 class GymPresenter(val view: GymView) {
     var gym = GymModel()
     var app: MainApp = view.application as MainApp
