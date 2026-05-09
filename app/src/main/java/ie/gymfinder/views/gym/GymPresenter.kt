@@ -15,12 +15,11 @@ import ie.gymfinder.models.Location
 import ie.gymfinder.views.editLocation.EditLocationView
 import org.checkerframework.checker.units.qual.g
 import timber.log.Timber
-
+import android.R.attr.rating
 class GymPresenter(val view: GymView) {
     var gym = GymModel()
     var app: MainApp = view.application as MainApp
-    private lateinit var locationClient: FusedLocationProviderClient
-    private val LOCATION_PERMISSION_REQUEST = 1001
+
 
     private lateinit var imageIntentLauncher : ActivityResultLauncher<PickVisualMediaRequest>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
@@ -39,10 +38,11 @@ class GymPresenter(val view: GymView) {
 
     fun getGyms() = app.gyms.findAll()
 
-    fun doAddOrSave(title: String, description: String, counties: String) {
+    fun doAddOrSave(title: String, description: String, counties: String,rating: Float) {
         gym.title = title
         gym.description = description
         gym.counties = counties
+        gym.rating = rating
         if (edit) {
             app.gyms.update(gym)
         } else {
@@ -82,11 +82,11 @@ class GymPresenter(val view: GymView) {
     }
 
 
-    fun cacheGym (title: String, description: String,counties: String) {
+    fun cacheGym (title: String, description: String,counties: String,rating: Float) {
         gym.title = title
         gym.description = description
         gym.counties = counties
-
+        gym.rating = rating
     }
 
     private fun registerImagePickerCallback() {
