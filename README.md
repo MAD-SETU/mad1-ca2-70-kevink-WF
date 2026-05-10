@@ -1,4 +1,4 @@
-
+<img width="340" height="738" alt="image" src="https://github.com/user-attachments/assets/d49d6ec6-4323-412c-b180-b1c205ab54fa" />
 # GymFinder
 <img width="403" height="737" alt="image" src="https://github.com/user-attachments/assets/01c5a4e8-0933-4448-ae74-b110fa5625e4" />
 
@@ -38,6 +38,13 @@
 
 ## MapActivity
 <img width="358" height="699" alt="image" src="https://github.com/user-attachments/assets/e8c46958-c037-45d1-be45-c39509cdb428" />
+
+## Settings
+
+<img width="340" height="738" alt="image" src="https://github.com/user-attachments/assets/ebd6b5d4-39cf-4d13-a97f-33bf1fc0df20" />
+
+# delete all Gyms
+# Toggle off/on Darkmode
 
 * Firebase
 **`Installation`**
