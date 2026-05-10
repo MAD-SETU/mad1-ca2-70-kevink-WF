@@ -43,12 +43,12 @@ class GymPresenter(val view: GymView) {
     }
 
     fun getGyms() = app.gyms.findAll()
-
-
-
-
-
+    
     fun doAddOrSave(title: String, description: String, counties: String,rating: Float) {
+        if (title.isEmpty()) {
+            view.showInvalidTitle()
+            return
+        }
         gym.title = title
         gym.description = description
         gym.counties = counties
@@ -70,7 +70,6 @@ class GymPresenter(val view: GymView) {
         view.finish()
     }
     fun doSelectImage() {
-
         val request = PickVisualMediaRequest.Builder()
             .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly)
             .build()
@@ -78,8 +77,12 @@ class GymPresenter(val view: GymView) {
     }
 
     fun doSetLocation() {
-        val location = Location(52.245696, -7.139102, 15f)
-
+        // Maybe store in this in object and match them in counties?
+        val location = if (gym.counties == "Waterford") {
+            Location(52.26060093399676, -7.106542926332248, 15f)
+        } else {
+            Location(52.83379701025627, -6.920591105076157, 15f)
+        }
         if (gym.zoom != 0f) {
             location.lat =  gym.lat
             location.lng = gym.lng
