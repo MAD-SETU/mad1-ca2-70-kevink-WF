@@ -40,4 +40,5 @@
     <string name="Setting">Settings</string>
     <string name="gymrating">Gym Rating</string>
     <string name="gym_image">Gym Image</string>
+    <string name="search_title">search by title\n</string>
 </resources>

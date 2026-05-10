@@ -6,11 +6,17 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import ie.gymfinder.main.MainApp
 import ie.gymfinder.models.GymModel
 import ie.gymfinder.models.Location
 import ie.gymfinder.views.editLocation.EditLocationView
 import timber.log.Timber
+import android.Manifest
+import android.annotation.SuppressLint
+import com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY
+import com.google.android.gms.tasks.Task
 
 class GymPresenter(val view: GymView) {
     var gym = GymModel()
@@ -19,6 +25,10 @@ class GymPresenter(val view: GymView) {
 
     private lateinit var imageIntentLauncher : ActivityResultLauncher<PickVisualMediaRequest>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+    private val fusedLocationProviderClient: FusedLocationProviderClient by lazy {
+        LocationServices.getFusedLocationProviderClient(view)
+    }
+
     var edit = false
     private var position: Int = 0
 
@@ -33,6 +43,10 @@ class GymPresenter(val view: GymView) {
     }
 
     fun getGyms() = app.gyms.findAll()
+
+
+
+
 
     fun doAddOrSave(title: String, description: String, counties: String,rating: Float) {
         gym.title = title
@@ -65,6 +79,7 @@ class GymPresenter(val view: GymView) {
 
     fun doSetLocation() {
         val location = Location(52.245696, -7.139102, 15f)
+
         if (gym.zoom != 0f) {
             location.lat =  gym.lat
             location.lng = gym.lng

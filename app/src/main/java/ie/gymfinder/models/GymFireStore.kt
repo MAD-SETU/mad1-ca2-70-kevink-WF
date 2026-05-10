@@ -57,7 +57,9 @@ class GymFireStore(private val context: Context) : GymStore {
                 Timber.e(it, "Server fetch failed")
             }
     }
-
+    override fun deleteAll(){
+        db.collection("gyms").document().delete()
+    }
     override fun create(gym: GymModel) {
         gym.id = generateRandomId()
         gyms.add(gym)
