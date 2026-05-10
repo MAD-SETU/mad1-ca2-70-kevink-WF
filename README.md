@@ -43,8 +43,8 @@
 
 <img width="340" height="738" alt="image" src="https://github.com/user-attachments/assets/ebd6b5d4-39cf-4d13-a97f-33bf1fc0df20" />
 
-# delete all Gyms
-# Toggle off/on Darkmode
+* delete all Gyms
+* Toggle off/on Darkmode
 
 * Firebase
 **`Installation`**
