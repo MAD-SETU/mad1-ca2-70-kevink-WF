@@ -13,10 +13,6 @@ import ie.gymfinder.models.GymModel
 import ie.gymfinder.models.Location
 import ie.gymfinder.views.editLocation.EditLocationView
 import timber.log.Timber
-import android.Manifest
-import android.annotation.SuppressLint
-import com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY
-import com.google.android.gms.tasks.Task
 
 class GymPresenter(val view: GymView) {
     var gym = GymModel()
@@ -25,9 +21,8 @@ class GymPresenter(val view: GymView) {
 
     private lateinit var imageIntentLauncher : ActivityResultLauncher<PickVisualMediaRequest>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
-    private val fusedLocationProviderClient: FusedLocationProviderClient by lazy {
-        LocationServices.getFusedLocationProviderClient(view)
-    }
+
+
 
     var edit = false
     private var position: Int = 0
@@ -73,11 +68,17 @@ class GymPresenter(val view: GymView) {
     }
 
     fun doSetLocation() {
-        // Maybe store in this in object and match them in counties?
-        val location = if (gym.counties == "Waterford") {
-            Location(52.26060093399676, -7.106542926332248, 15f)
-        } else {
-            Location(52.83379701025627, -6.920591105076157, 15f)
+        // Maybe store in this in  a new class and match them in counties?
+        val location = when (gym.counties) {
+            "Waterford" -> {
+                Location(52.26060093399676, -7.106542926332248, 15f)
+            }
+            "Dublin" -> {
+                Location(53.327326365828114, -6.331682644688584, 15f)
+            }
+            else -> {
+                Location(53.19333558814975, -7.574665920831183, 10f) // middle of ireland
+            }
         }
         if (gym.zoom != 0f) {
             location.lat =  gym.lat

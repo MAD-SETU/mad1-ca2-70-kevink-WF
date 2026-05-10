@@ -31,14 +31,11 @@ class GymFireStore(private val context: Context) : GymStore {
                         gyms.add(it)
                     }
                 }
-
                 Timber.i("Loaded cached gym")
-
-
                 onResult(gyms)
             }
 
-
+         // Gets from server
         db.collection("gyms")
             .get(Source.SERVER)
             .addOnSuccessListener { result ->
@@ -50,7 +47,6 @@ class GymFireStore(private val context: Context) : GymStore {
                         gyms.add(it)
                     }
                 }
-
                 Timber.i("Loaded fresh gyms")
                 onResult(gyms)
             }

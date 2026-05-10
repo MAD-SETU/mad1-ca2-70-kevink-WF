@@ -52,6 +52,20 @@
             app:layout_constraintTop_toBottomOf="@id/gymTitle"
             tools:text="A Description" />
 
+        <TextView
+            android:id="@+id/gymCounty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="viewStart"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@+id/ratingBar"
+            app:layout_constraintStart_toEndOf="@+id/imageIcon"
+            app:layout_constraintTop_toBottomOf="@id/description"
+            tools:text="County" />
+
         <RatingBar
             android:id="@+id/ratingBar"
             style="@style/Widget.AppCompat.RatingBar.Small"

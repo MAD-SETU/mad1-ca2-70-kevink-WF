@@ -12,50 +12,54 @@ import org.junit.runner.RunWith
 import org.junit.Assert.*
 import org.junit.Before
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
     private lateinit var gymStoreFirebase: GymFireStore
     private lateinit var testGym: GymModel
+
     @Before
     fun setUp() {
-        gymStoreFirebase.fetchGyms(
-            onResult = TODO()
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        gymStoreFirebase = GymFireStore(appContext)
+        testGym = GymModel(
+            title = "Fuze",
+            description = "Fuze gym is a good gym in waterford",
+            counties = "Waterford",
+            rating = 2f,
+            id = generateRandomId()
         )
-        testGym = GymModel(title = "Fuze", description = "Fuze gym is a good gym in waterford", counties = "Waterford", rating = 2f, id = generateRandomId())
     }
 
     @Test
     fun useAppContext() {
-        gymStoreFirebase = GymFireStore(InstrumentationRegistry.getInstrumentation().targetContext)
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("ie.gymfinder", appContext.packageName)
-
-
-
     }
-    @Test
-    fun createGym(){
 
-        gymStoreFirebase.create(testGym)
-        assertNotNull("Found Gym",testGym)
-    }
     @Test
-    fun updateGym(){
+    fun createGym() {
         gymStoreFirebase.create(testGym)
-        testGym.description = "updated"
+        val foundGym = gymStoreFirebase.findAll().find { it.id == testGym.id }
+        assertNotNull("Gym should be found in store", foundGym)
+        assertEquals(testGym.title, foundGym?.title)
+    }
+
+    @Test
+    fun updateGym() {
+        gymStoreFirebase.create(testGym)
+        val newDescription = "updated description"
+        testGym.description = newDescription
         gymStoreFirebase.update(testGym)
-        assertEquals("updated",testGym.description)
+        
+        val updatedGym = gymStoreFirebase.findAll().find { it.id == testGym.id }
+        assertEquals(newDescription, updatedGym?.description)
     }
-    @Test
-    fun removeGym(){
 
+    @Test
+    fun removeGym() {
+        gymStoreFirebase.create(testGym)
         gymStoreFirebase.delete(testGym)
-        val foundGym = gymStoreFirebase.findAll().find { p -> p.id == testGym.id }
-        assertNull("Gym removed from store", foundGym)
+        val foundGym = gymStoreFirebase.findAll().find { it.id == testGym.id }
+        assertNull("Gym should be removed from store", foundGym)
     }
 }
