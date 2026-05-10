@@ -74,6 +74,6 @@ class GymListPresenter(val view: GymListView ) {
 
     fun doShowSetting() {
         val launcherIntent = Intent(view, SettingView::class.java)
-        mapIntentLauncher.launch(launcherIntent)
+        refreshIntentLauncher.launch(launcherIntent)
     }
 }

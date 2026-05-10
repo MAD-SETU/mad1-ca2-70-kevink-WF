@@ -31,6 +31,7 @@ class SettingView : AppCompatActivity() {
         }
         binding.delete.setOnClickListener {
             presenter.showDialog()
+
         }
 
     }

@@ -18,12 +18,15 @@ class GymListView : AppCompatActivity(), GymListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityGymListBinding
+    private lateinit var adapter: GymAdapter
     lateinit var presenter: GymListPresenter
     private var position: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGymListBinding.inflate(layoutInflater)
+        adapter = GymAdapter(emptyList(), this)
+        binding.recyclerView.adapter = adapter
         setContentView(binding.root)
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)

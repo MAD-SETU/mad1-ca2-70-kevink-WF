@@ -1,5 +1,6 @@
 package ie.gymfinder.views.setting
 
+import android.app.Activity
 import android.content.Intent
 import android.provider.Settings.Global.getString
 import androidx.activity.result.ActivityResultLauncher
@@ -13,7 +14,8 @@ import ie.gymfinder.views.gymlist.GymListView
 class SettingPresenter(val view: SettingView) {
 
     var app: MainApp = view.application as MainApp
-    private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var settingIntentLauncher: ActivityResultLauncher<Intent>
+
     fun toggleDarkMode() {
         // Gets current Theme
         val currentMode = AppCompatDelegate.getDefaultNightMode()
@@ -48,9 +50,8 @@ class SettingPresenter(val view: SettingView) {
                 // Yes Buttons Deletes all gyms And goes to  GymListView
                 .setPositiveButton(view.getString(R.string.dialogdelete_yes)) { dialog, which ->
                     app.gyms.deleteAll()
-                    view.startActivity(
-                        Intent(view, GymListView::class.java)
-                    )
+                    view.setResult(Activity.RESULT_OK)
+                    view.finish() // Goes back to the existing list
                 }
                     // No Button Just cancels
                 .setNegativeButton(view.getString(R.string.dialogdelete_no)) { dialog, which ->
