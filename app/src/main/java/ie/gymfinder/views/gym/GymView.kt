@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import ie.gymfinder.R
 import ie.gymfinder.databinding.ActivityMainBinding
@@ -109,11 +109,6 @@ class GymView : AppCompatActivity() {
             .into(binding.gymImage)
         binding.chooseImage.setText(R.string.change_gym_image)
     }
-
-    fun showInvalidTitle() {
-        Toast.makeText(this, R.string.enter_gym_title, Toast.LENGTH_LONG).show()
-    }
-
     private fun setupSpinner() {
         val adapter = ArrayAdapter(
             this,

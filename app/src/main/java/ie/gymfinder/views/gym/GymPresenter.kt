@@ -45,10 +45,6 @@ class GymPresenter(val view: GymView) {
     fun getGyms() = app.gyms.findAll()
     
     fun doAddOrSave(title: String, description: String, counties: String,rating: Float) {
-        if (title.isEmpty()) {
-            view.showInvalidTitle()
-            return
-        }
         gym.title = title
         gym.description = description
         gym.counties = counties
