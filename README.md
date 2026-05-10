@@ -1,4 +1,4 @@
-<img width="340" height="738" alt="image" src="https://github.com/user-attachments/assets/d49d6ec6-4323-412c-b180-b1c205ab54fa" />
+
 # GymFinder
 <img width="403" height="737" alt="image" src="https://github.com/user-attachments/assets/01c5a4e8-0933-4448-ae74-b110fa5625e4" />
 
