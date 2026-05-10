@@ -15,14 +15,14 @@ class SettingPresenter(val view: SettingView) {
     var app: MainApp = view.application as MainApp
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
     fun toggleDarkMode() {
-
+        // Gets current Theme
         val currentMode = AppCompatDelegate.getDefaultNightMode()
-
+          // sets it to night mode
         val newMode =
             currentMode != AppCompatDelegate.MODE_NIGHT_YES
 
         if (newMode) {
-
+           
             AppCompatDelegate.setDefaultNightMode(
                 AppCompatDelegate.MODE_NIGHT_YES
             )

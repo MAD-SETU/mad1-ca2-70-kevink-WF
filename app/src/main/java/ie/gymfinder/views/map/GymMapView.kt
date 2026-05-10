@@ -42,6 +42,7 @@ class GymMapView : AppCompatActivity() , GoogleMap.OnMarkerClickListener{
         }
     }
     fun showGym(gym: GymModel) {
+        contentBinding.ratingBar2.rating = gym.rating
         contentBinding.currentTitle.text = gym.title
         contentBinding.currentDescription.text = gym.description
         if (gym.image.isNotEmpty()) {

@@ -31,8 +31,8 @@ class GymView : AppCompatActivity() {
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
 
-        presenter = GymPresenter(this)
         setupSpinner()
+        presenter = GymPresenter(this)
         val layoutManager = LinearLayoutManager(this)
 
         binding.chooseImage.setOnClickListener {
@@ -90,6 +90,11 @@ class GymView : AppCompatActivity() {
         binding.description.setText(gym.description)
         binding.ratingBar.rating = gym.rating
         binding.btnAdd.setText(R.string.save_gym)
+
+        val adapter = binding.countySpinner.adapter as ArrayAdapter<String>
+        val spinnerPosition = adapter.getPosition(gym.counties)
+        binding.countySpinner.setSelection(spinnerPosition)
+
         if (gym.image.isNotEmpty()) {
             Picasso.get()
                 .load(gym.image)
@@ -110,7 +115,6 @@ class GymView : AppCompatActivity() {
             android.R.layout.simple_spinner_item,
             resources.getStringArray(R.array.Counties)
         )
-
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.countySpinner.adapter = adapter
     }
