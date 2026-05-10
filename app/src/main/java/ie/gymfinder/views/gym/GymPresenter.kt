@@ -70,7 +70,7 @@ class GymPresenter(val view: GymView) {
         view.finish()
     }
     fun doSelectImage() {
-        //   showImagePicker(imageIntentLauncher,view)
+
         val request = PickVisualMediaRequest.Builder()
             .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly)
             .build()

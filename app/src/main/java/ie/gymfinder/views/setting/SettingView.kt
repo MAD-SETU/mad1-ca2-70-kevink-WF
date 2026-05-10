@@ -22,7 +22,7 @@ class SettingView : AppCompatActivity() {
         app = application as MainApp
         presenter = SettingPresenter(this)
 
-        binding.toolbarAdd.title = R.string.Setting.toString()
+        binding.toolbarAdd.title = getString(R.string.Setting)
         setSupportActionBar(binding.toolbarAdd)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

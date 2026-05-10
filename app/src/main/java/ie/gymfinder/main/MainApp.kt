@@ -24,9 +24,9 @@ class MainApp : Application() {
         super.onCreate()
 
         Timber.plant(Timber.DebugTree())
-         gyms = GymMemStore()
+//         gyms = GymMemStore()
 //         gyms = GymJsonStore(applicationContext)
-//        gyms = GymFireStore(applicationContext)
+        gyms = GymFireStore(applicationContext)
 
         i("GymFinder started")
     }

@@ -1,13 +1,19 @@
 package ie.gymfinder.views.setting
 
+import android.content.Intent
+import android.provider.Settings.Global.getString
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
+import ie.gymfinder.R
 import ie.gymfinder.main.MainApp
+import ie.gymfinder.views.gym.GymView
+import ie.gymfinder.views.gymlist.GymListView
 
 class SettingPresenter(val view: SettingView) {
 
     var app: MainApp = view.application as MainApp
-
+    private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
     fun toggleDarkMode() {
 
         val currentMode = AppCompatDelegate.getDefaultNightMode()
@@ -30,17 +36,26 @@ class SettingPresenter(val view: SettingView) {
 
         fun showDialog() {
             val builder: AlertDialog.Builder = AlertDialog.Builder(view)
+            // Sets Message for Dialog
+            val message = view.getString(R.string.dialogdelete_message) +
+                    " "+
+                    view.presenter.view.app.gyms.findAll().size  + " " +
+                    view.getString(R.string.dialogdelete_gyms)
             builder
-                .setTitle("Are you sure?")
-                .setPositiveButton("Yes") { dialog, which ->
-                    view.app.gyms.deleteAll()
+                // Title
+                .setTitle(view.getString(R.string.dialogdelete_sure))
+                .setMessage(message)
+                // Yes Buttons Deletes all gyms And goes to  GymListView
+                .setPositiveButton(view.getString(R.string.dialogdelete_yes)) { dialog, which ->
+                    app.gyms.deleteAll()
+                    val launcherIntent = Intent(view, GymListView::class.java)
+                    refreshIntentLauncher.launch(launcherIntent)
                 }
-                .setNegativeButton("No") { dialog, which ->
+                    // No Button Just cancels
+                .setNegativeButton(view.getString(R.string.dialogdelete_no)) { dialog, which ->
                   dialog.cancel()
                 }
-                .setItems(arrayOf("Your about to delete ${view.presenter.app.gyms.findAll().size} Gyms")) { dialog, which ->
 
-                }
 
             val dialog: AlertDialog = builder.create()
             dialog.show()

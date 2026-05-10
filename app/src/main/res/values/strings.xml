@@ -41,4 +41,12 @@
     <string name="gymrating">Gym Rating</string>
     <string name="gym_image">Gym Image</string>
     <string name="search_title">search by title\n</string>
+    <string name="dialogdelete_sure">Are you sure?</string>
+    <string name="dialogdelete_yes">Yes</string>
+    <string name="dialogdelete_no">No</string>
+    <string name="dialogdelete_message"> You are about to delete </string>
+    <string name="dialogdelete_gyms"> Gyms </string>
+    <string name="dark_modeBtn">Toggle Dark Mode</string>
+    <string name="DeleteAllGymsBtn">Delete Gyms</string>
+    <string name="DeleteAll">Delete all gyms</string>
 </resources>
