@@ -20,6 +20,7 @@ class GymMapPresenter(val view: GymMapView) {
         map.uiSettings.setZoomControlsEnabled(true)
         map.setOnMarkerClickListener(view)
         app.gyms.findAll().forEach {
+
             val loc = LatLng(it.lat, it.lng)
             val options = MarkerOptions()
                 .title(it.title)

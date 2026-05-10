@@ -55,6 +55,7 @@ class GymFireStore(private val context: Context) : GymStore {
             }
     }
     override fun deleteAll(){
+        gyms.clear()
         db.collection("gyms")
             .get()
             .addOnSuccessListener { result ->
@@ -64,8 +65,6 @@ class GymFireStore(private val context: Context) : GymStore {
                         .document(doc.id)
                         .delete()
                 }
-
-                gyms.clear()
                 Timber.i("deleted")
             }
     }
