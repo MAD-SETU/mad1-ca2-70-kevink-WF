@@ -3,6 +3,7 @@ package ie.gymfinder.models
 import android.content.Context
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Source
+import kotlinx.coroutines.tasks.await
 import timber.log.Timber
 
 class GymFireStore(private val context: Context) : GymStore {
@@ -18,7 +19,7 @@ class GymFireStore(private val context: Context) : GymStore {
 
     fun fetchGyms(onResult: (List<GymModel>) -> Unit) {
 
-        // FAST cache load
+        //cache load
         db.collection("gyms")
             .get(Source.CACHE)
             .addOnSuccessListener { result ->
@@ -58,7 +59,19 @@ class GymFireStore(private val context: Context) : GymStore {
             }
     }
     override fun deleteAll(){
-        db.collection("gyms").document().delete()
+        db.collection("gyms")
+            .get()
+            .addOnSuccessListener { result ->
+
+                for (doc in result.documents) {
+                    db.collection("gyms")
+                        .document(doc.id)
+                        .delete()
+                }
+
+                gyms.clear()
+                Timber.i("deleted")
+            }
     }
     override fun create(gym: GymModel) {
         gym.id = generateRandomId()
@@ -91,6 +104,7 @@ class GymFireStore(private val context: Context) : GymStore {
         db.collection("gyms")
             .document(gym.id.toString())
             .delete()
+
     }
 
     override fun findById(id: Long): GymModel? {

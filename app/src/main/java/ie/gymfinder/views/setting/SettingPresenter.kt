@@ -48,8 +48,9 @@ class SettingPresenter(val view: SettingView) {
                 // Yes Buttons Deletes all gyms And goes to  GymListView
                 .setPositiveButton(view.getString(R.string.dialogdelete_yes)) { dialog, which ->
                     app.gyms.deleteAll()
-                    val launcherIntent = Intent(view, GymListView::class.java)
-                    refreshIntentLauncher.launch(launcherIntent)
+                    view.startActivity(
+                        Intent(view, GymListView::class.java)
+                    )
                 }
                     // No Button Just cancels
                 .setNegativeButton(view.getString(R.string.dialogdelete_no)) { dialog, which ->
