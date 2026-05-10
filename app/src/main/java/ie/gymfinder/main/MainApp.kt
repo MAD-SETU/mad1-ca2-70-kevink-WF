@@ -11,6 +11,9 @@ import ie.gymfinder.models.GymJsonStore
 import ie.gymfinder.models.GymMemStore
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import android.Manifest
 
 class MainApp : Application() {
     lateinit var db: DatabaseReference
@@ -21,12 +24,11 @@ class MainApp : Application() {
         super.onCreate()
 
         Timber.plant(Timber.DebugTree())
-
-
 //         gyms = GymMemStore()
-         gyms = GymJsonStore(applicationContext)
-//        gyms = GymFireStore(applicationContext)
+//         gyms = GymJsonStore(applicationContext)
+        gyms = GymFireStore(applicationContext)
 
         i("GymFinder started")
     }
+
 }

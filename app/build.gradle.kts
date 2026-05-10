@@ -18,7 +18,7 @@ android {
     defaultConfig {
         applicationId = "ie.gymfinder"
         minSdk = 34
-        targetSdk = 36
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.play.services.location)
     implementation(libs.play.services.maps)
+    implementation(libs.play.services.google.base)
     implementation(libs.kotlinx.coroutines.play.services)
 
     implementation(libs.timber)

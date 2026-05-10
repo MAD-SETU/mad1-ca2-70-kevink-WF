@@ -1,5 +1,6 @@
 package ie.gymfinder
 
+import ie.gymfinder.models.GymFireStore
 import org.junit.Test
 import org.junit.Before
 import org.junit.Assert.*
@@ -16,10 +17,12 @@ import ie.gymfinder.models.GymModel
 
 class ExampleUnitTest {
     private lateinit var gymStore: GymMemStore
+    private lateinit var gymStoreFirebase: GymFireStore
     private lateinit var testGym: GymModel
     @Before
     fun setUp() {
         gymStore = GymMemStore()
+
         testGym = GymModel(title = "Fuze", description = "Fuze gym is a good gym in waterford", counties = "Waterford")
 
     }

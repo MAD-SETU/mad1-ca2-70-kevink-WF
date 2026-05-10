@@ -48,7 +48,6 @@ class GymView : AppCompatActivity() {
             presenter.cacheGym(
                 binding.GymTitle.text.toString(),
                 binding.description.text.toString(),
-
                 binding.countySpinner.selectedItem.toString(),
                 binding.ratingBar.rating
 
@@ -60,10 +59,13 @@ class GymView : AppCompatActivity() {
             presenter.doAddOrSave(
                 binding.GymTitle.text.toString(),
                 binding.description.text.toString(),
-                binding.ratingBar.toString(),
-                binding.ratingBar.rating
+                binding.countySpinner.selectedItem.toString(),
+                 binding.ratingBar.rating,
 
             )
+        }
+        binding.DeleteGym.setOnClickListener {
+            presenter.doDelete()
         }
     }
 
@@ -86,15 +88,14 @@ class GymView : AppCompatActivity() {
     fun showGym(gym: GymModel) {
         binding.GymTitle.setText(gym.title)
         binding.description.setText(gym.description)
-        binding.ratingBar.setRating(gym.rating.toFloat())
+        binding.ratingBar.rating = gym.rating
         binding.btnAdd.setText(R.string.save_gym)
-        Picasso.get()
-            .load(gym.image)
-            .into(binding.gymImage)
-        if (gym.image.isEmpty()) {
+        if (gym.image.isNotEmpty()) {
+            Picasso.get()
+                .load(gym.image)
+                .into(binding.gymImage)
             binding.chooseImage.setText(R.string.change_gym_image)
         }
-
     }
     fun updateImage(image: Uri){
         i("Image updated")

@@ -27,6 +27,10 @@ class GymMemStore : GymStore{
         val foundGym: GymModel? = gyms.find { it.id == id }
         return foundGym
     }
+
+    override fun deleteAll() {
+        gyms.removeAll(gyms)
+    }
     override fun update(gym: GymModel) {
         val foundGym: GymModel? = gyms.find { p -> p.id == gym.id }
         if (foundGym != null) {

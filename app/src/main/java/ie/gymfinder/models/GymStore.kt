@@ -9,4 +9,6 @@ interface GymStore {
     fun update(gym: GymModel)
     fun delete(gym: GymModel)
     fun findById(id:Long) : GymModel?
+    fun deleteAll()
+
 }

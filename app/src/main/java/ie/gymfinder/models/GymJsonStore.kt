@@ -5,6 +5,7 @@ import android.net.Uri
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import ie.gymfinder.helpers.*
+import org.checkerframework.checker.units.qual.g
 import timber.log.Timber
 import java.lang.reflect.Type
 import java.util.*
@@ -60,6 +61,10 @@ class GymJsonStore(private val context: Context) : GymStore {
 
     override fun delete(gym: GymModel) {
         gyms.remove(gym)
+        serialize()
+    }
+    override fun deleteAll() {
+        gyms.clear()
         serialize()
     }
 

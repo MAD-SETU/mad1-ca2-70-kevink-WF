@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/item_add"
         android:icon="@android:drawable/ic_menu_add"
@@ -12,7 +13,13 @@
         android:title="@string/title_activity_map"
         app:showAsAction="always" />
     <item
+        android:id="@+id/setting"
+        android:iconTint="#D33131"
+        android:menuCategory="system"
+        android:numericModifiers="SHIFT|CTRL|SYM"
         android:title="@string/Setting"
-        android:id="@+id/setting"/>
-    <item android:title="Item"/>
+        android:tooltipText="@string/gcm_defaultSenderId">
+        <menu />
+    </item>
+
 </menu>

@@ -2,6 +2,9 @@ package ie.gymfinder.views.setting
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.getDefaultNightMode
+import ie.gymfinder.R
 import ie.gymfinder.databinding.ActivitySettingBinding
 import ie.gymfinder.main.MainApp
 
@@ -19,14 +22,19 @@ class SettingView : AppCompatActivity() {
         app = application as MainApp
         presenter = SettingPresenter(this)
 
-        binding.toolbarAdd.title = "Settings"
+        binding.toolbarAdd.title = getString(R.string.Setting)
         setSupportActionBar(binding.toolbarAdd)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         binding.btnDarkMode.setOnClickListener {
             presenter.toggleDarkMode()
         }
+        binding.delete.setOnClickListener {
+            presenter.showDialog()
+        }
+
     }
+
 
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         when (item.itemId) {

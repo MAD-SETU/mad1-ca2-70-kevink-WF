@@ -44,9 +44,11 @@ class GymMapView : AppCompatActivity() , GoogleMap.OnMarkerClickListener{
     fun showGym(gym: GymModel) {
         contentBinding.currentTitle.text = gym.title
         contentBinding.currentDescription.text = gym.description
-        Picasso.get()
-            .load(gym.image)
-            .into(contentBinding.currentImage)
+        if (gym.image.isNotEmpty()) {
+            Picasso.get()
+                .load(gym.image)
+                .into(contentBinding.currentImage)
+        }
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
